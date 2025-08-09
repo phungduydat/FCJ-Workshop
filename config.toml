@@ -4,6 +4,11 @@ theme = "hugo-theme-learn"
 # === BẮT BUỘC: điền đúng baseURL ===
 # Nếu repo là bất kỳ tên khác (project)   -> "https://<username>.github.io/<repo>/"
 baseURL = "https://phungduydat.github.io/FCJ-Workshop/"
+
+publishDir = "docs"
+relativeURLs = true
+canonifyURLs = true
+
 # For search functionality
 [outputs]
 home = [ "HTML", "RSS", "JSON"]
