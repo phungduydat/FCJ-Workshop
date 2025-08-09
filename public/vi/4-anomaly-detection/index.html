@@ -1,0 +1,538 @@
+<!doctype html><html lang=vi class="js csstransforms3d">
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=generator content="Hugo 0.92.2">
+<meta name=description content>
+<meta name=author content="journeyoftheaverageguy@gmail.com">
+<link rel=icon href=/FCJ-Workshop/images/favicon.png type=image/png>
+<title>Triển khai Tính năng Cảnh Báo và Phản Hồi Tự Động cho WebEnglish :: AWS System Manager</title>
+<link href=/FCJ-Workshop/css/nucleus.css?1754753027 rel=stylesheet>
+<link href=/FCJ-Workshop/css/fontawesome-all.min.css?1754753027 rel=stylesheet>
+<link href=/FCJ-Workshop/css/hybrid.css?1754753027 rel=stylesheet>
+<link href=/FCJ-Workshop/css/featherlight.min.css?1754753027 rel=stylesheet>
+<link href=/FCJ-Workshop/css/perfect-scrollbar.min.css?1754753027 rel=stylesheet>
+<link href=/FCJ-Workshop/css/auto-complete.css?1754753027 rel=stylesheet>
+<link href=/FCJ-Workshop/css/atom-one-dark-reasonable.css?1754753027 rel=stylesheet>
+<link href=/FCJ-Workshop/css/theme.css?1754753027 rel=stylesheet>
+<link href=/FCJ-Workshop/css/hugo-theme.css?1754753027 rel=stylesheet>
+<link href=/FCJ-Workshop/css/theme-workshop.css?1754753027 rel=stylesheet>
+<script src=/FCJ-Workshop/js/jquery-3.3.1.min.js?1754753027></script>
+<style>:root #header+#content>#left>#rlblock_left{display:none!important}</style>
+</head>
+<body data-url=/FCJ-Workshop/vi/4-anomaly-detection/>
+<nav id=sidebar class=showVisitedLinks>
+<div id=header-wrapper>
+<div id=header>
+<a id=logo href=/><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" width="30%"><defs><style>.cls-1{fill:#fff}.cls-2{fill:#f90;fill-rule:evenodd}</style></defs><title>AWS-Logo_White-Color</title><path class="cls-1" d="M14.09 10.85a4.7 4.7.0 00.19 1.48 7.73 7.73.0 00.54 1.19.77.77.0 01.12.38.64.64.0 01-.32.49l-1 .7a.83.83.0 01-.44.15.69.69.0 01-.49-.23 3.8 3.8.0 01-.6-.77q-.25-.42-.51-1a6.14 6.14.0 01-4.89 2.3 4.54 4.54.0 01-3.32-1.19 4.27 4.27.0 01-1.22-3.2 4.28 4.28.0 011.46-3.4A6.06 6.06.0 017.69 6.46a12.47 12.47.0 011.76.13q.92.13 1.91.36V5.73a3.65 3.65.0 00-.79-2.66A3.81 3.81.0 007.86 2.3a7.71 7.71.0 00-1.79.22 12.78 12.78.0 00-1.79.57 4.55 4.55.0 01-.58.22h-.26q-.35.0-.35-.52V2a1.09 1.09.0 01.12-.58 1.2 1.2.0 01.47-.35A10.88 10.88.0 015.77.32 10.19 10.19.0 018.36.0a6 6 0 014.35 1.35 5.49 5.49.0 011.38 4.09zM7.34 13.38a5.36 5.36.0 001.72-.31A3.63 3.63.0 0010.63 12 2.62 2.62.0 0011.19 11a5.63 5.63.0 00.16-1.44v-.7a14.35 14.35.0 00-1.53-.28 12.37 12.37.0 00-1.56-.1 3.84 3.84.0 00-2.47.67A2.34 2.34.0 005 11a2.35 2.35.0 00.61 1.76A2.4 2.4.0 007.34 13.38zm13.35 1.8a1 1 0 01-.64-.16 1.3 1.3.0 01-.35-.65L15.81 1.51a3 3 0 01-.15-.67.36.36.0 01.41-.41H17.7a1 1 0 01.65.16 1.4 1.4.0 01.33.65l2.79 11 2.59-11A1.17 1.17.0 0124.39.6a1.1 1.1.0 01.67-.16H26.4a1.1 1.1.0 01.67.16 1.17 1.17.0 01.32.65L30 12.39 32.88 1.25A1.39 1.39.0 0133.22.6a1 1 0 01.65-.16h1.54a.36.36.0 01.41.41 1.36 1.36.0 010 .26 3.64 3.64.0 01-.12.41l-4 12.86a1.3 1.3.0 01-.35.65 1 1 0 01-.64.16H29.25a1 1 0 01-.67-.17 1.26 1.26.0 01-.32-.67L25.67 3.64l-2.56 10.7a1.26 1.26.0 01-.32.67 1 1 0 01-.67.17zm21.36.44a11.28 11.28.0 01-2.56-.29 7.44 7.44.0 01-1.92-.67 1 1 0 01-.61-.93v-.84q0-.52.38-.52a.9.9.0 01.31.06l.42.17a8.77 8.77.0 001.83.58 9.78 9.78.0 002 .2 4.48 4.48.0 002.43-.55 1.76 1.76.0 00.86-1.57 1.61 1.61.0 00-.45-1.16A4.29 4.29.0 0043 9.22l-2.41-.76A5.15 5.15.0 0138 6.78a3.94 3.94.0 01-.83-2.41 3.7 3.7.0 01.45-1.85 4.47 4.47.0 011.19-1.37 5.27 5.27.0 011.7-.86A7.4 7.4.0 0142.6.0a8.87 8.87.0 011.12.07q.57.07 1.08.19t.95.26a4.27 4.27.0 01.7.29 1.59 1.59.0 01.49.41.94.94.0 01.15.55v.79q0 .52-.38.52a1.76 1.76.0 01-.64-.2 7.74 7.74.0 00-3.2-.64 4.37 4.37.0 00-2.21.47 1.6 1.6.0 00-.79 1.48 1.58 1.58.0 00.49 1.18 4.94 4.94.0 001.83.92L44.55 7a5.08 5.08.0 012.57 1.6A3.76 3.76.0 0147.9 11a4.21 4.21.0 01-.44 1.93 4.4 4.4.0 01-1.21 1.47 5.43 5.43.0 01-1.85.93A8.25 8.25.0 0142.05 15.62z"/><path class="cls-2" d="M45.19 23.81C39.72 27.85 31.78 30 25 30A36.64 36.64.0 01.22 20.57c-.51-.46-.06-1.09.56-.74A49.78 49.78.0 0025.53 26.4 49.23 49.23.0 0044.4 22.53C45.32 22.14 46.1 23.14 45.19 23.81z"/><path class="cls-2" d="M47.47 21.21c-.7-.9-4.63-.42-6.39-.21-.53.06-.62-.4-.14-.74 3.13-2.2 8.27-1.57 8.86-.83s-.16 5.89-3.09 8.35c-.45.38-.88.18-.68-.32C46.69 25.8 48.17 22.11 47.47 21.21z"/></svg>
+</a>
+</div>
+<div class=searchbox>
+<label for=search-by><i class="fas fa-search"></i></label>
+<input data-search-input id=search-by type=search placeholder=Search...>
+<span data-search-clear><i class="fas fa-times"></i></span>
+</div>
+<script type=text/javascript src=/FCJ-Workshop/js/lunr.min.js?1754753027></script>
+<script type=text/javascript src=/FCJ-Workshop/js/auto-complete.js?1754753027></script>
+<script type=text/javascript>var baseurl="https://phungduydat.github.io/FCJ-Workshop//vi"</script>
+<script type=text/javascript src=/FCJ-Workshop/js/search.js?1754753027></script>
+</div>
+<div class=highlightable>
+<ul class=topics>
+<li data-nav-id=/FCJ-Workshop/vi/1-introduce/ title="Giới thiệu" class=dd-item>
+<a href=/FCJ-Workshop/vi/1-introduce/>
+<b> 1. </b> Giới thiệu
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+<li data-nav-id=/FCJ-Workshop/vi/2-prerequiste/ title="Các bước Chuẩn bị Môi trường AWS" class=dd-item>
+<a href=/FCJ-Workshop/vi/2-prerequiste/>
+<b> 2. </b> Các bước Chuẩn bị Môi trường AWS
+<i class="fas fa-check read-icon"></i>
+</a>
+<ul>
+<li data-nav-id=/FCJ-Workshop/vi/2-prerequiste/2.1.1-createec2/ title=" Hướng Dẫn Tạo EC2 Instance Default Trên AWS" class=dd-item>
+<a href=/FCJ-Workshop/vi/2-prerequiste/2.1.1-createec2/>
+<b> 2.1.1 </b> Hướng Dẫn Tạo EC2 Instance Default Trên AWS
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+<li data-nav-id=/FCJ-Workshop/vi/2-prerequiste/2.1.4-createvpc/ title=" Chuẩn Bị Môi Trường Tạo Docker Image Cho Dự Án Spring Boot" class=dd-item>
+<a href=/FCJ-Workshop/vi/2-prerequiste/2.1.4-createvpc/>
+<b> 2.1.2 </b> Chuẩn Bị Môi Trường Tạo Docker Image Cho Dự Án Spring Boot
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+<li data-nav-id=/FCJ-Workshop/vi/2-prerequiste/2.1.2-createpublicsubnet/ title="Deploying a Docker Image to AWS ECR on Linux " class=dd-item>
+<a href=/FCJ-Workshop/vi/2-prerequiste/2.1.2-createpublicsubnet/>
+<b> 2.1.2 </b> Deploying a Docker Image to AWS ECR on Linux
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+<li data-nav-id=/FCJ-Workshop/vi/2-prerequiste/2.1.3-createprivatesubnet/ title="Triển Khai Dự Án AWS CDK Kết Nối ECS, EC2, IAM" class=dd-item>
+<a href=/FCJ-Workshop/vi/2-prerequiste/2.1.3-createprivatesubnet/>
+<b> 2.1.3 </b> Triển Khai Dự Án AWS CDK Kết Nối ECS, EC2, IAM
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+</ul>
+</li>
+<li data-nav-id=/FCJ-Workshop/vi/3-monitoring/ title="Triển khai Giám sát Hệ thống" class=dd-item>
+<a href=/FCJ-Workshop/vi/3-monitoring/>
+<b> 3 </b> Triển khai Giám sát Hệ thống
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+<li data-nav-id=/FCJ-Workshop/vi/4-anomaly-detection/ title="Triển khai Tính năng Cảnh Báo và Phản Hồi Tự Động cho WebEnglish" class="dd-item
+parent
+active">
+<a href=/FCJ-Workshop/vi/4-anomaly-detection/>
+<b> 4. </b> Triển khai Tính năng Cảnh Báo và Phản Hồi Tự Động cho WebEnglish
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+<li data-nav-id=/FCJ-Workshop/vi/5-automated-response/ title="Automated Response" class=dd-item>
+<a href=/FCJ-Workshop/vi/5-automated-response/>
+<b> 5. </b> Automated Response
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+<li data-nav-id=/FCJ-Workshop/vi/7-dashboard/ title="Dashboard Development" class=dd-item>
+<a href=/FCJ-Workshop/vi/7-dashboard/>
+<b> 6. </b> Dashboard Development
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+<li data-nav-id=/FCJ-Workshop/vi/8-operations/ title="Operational Procedures" class=dd-item>
+<a href=/FCJ-Workshop/vi/8-operations/>
+<b>7. </b>Operational Procedures
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+<li data-nav-id=/FCJ-Workshop/vi/11-cleanup/ title="Clean up" class=dd-item>
+<a href=/FCJ-Workshop/vi/11-cleanup/>
+<b>8. </b>Clean up
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+</ul>
+<section id=shortcuts>
+<h3>More</h3>
+<ul>
+<li>
+<a class=padding href=https://www.facebook.com/groups/awsstudygroupfcj/><i class="fab fa-facebook"></i> AWS Study Group</a>
+</li>
+</ul>
+</section>
+<section id=prefooter>
+<hr>
+<ul>
+<li>
+<a class=padding>
+<i class="fas fa-language fa-fw"></i>
+<div class=select-style>
+<select id=select-language onchange="location=this.value"><option id=en value=https://phungduydat.github.io/FCJ-Workshop/4-anomaly-detection/>English</option><option id=vi value=https://phungduydat.github.io/FCJ-Workshop/vi/4-anomaly-detection/ selected>Tiếng Việt</option></select><svg id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="255" height="255" viewBox="0 0 255 255" style="enable-background:new 0 0 255 255"><g><g id="arrow-drop-down"><polygon points="0,63.75 127.5,191.25 255,63.75"/></g></g></svg>
+</div>
+</a>
+</li>
+<li><a class=padding href=# data-clear-history-toggle><i class="fas fa-history fa-fw"></i> Clear History</a></li>
+</ul>
+</section>
+<section id=footer>
+<left>
+<b> Workshop</b> <br>
+<img src="https://hitwebcounter.com/counter/counter.php?page=7920860&style=0038&nbdigits=9&type=page&initCount=0" title=Migrate alt="web counter" border=0></a> <br>
+<b> <a href=https://cloudjourney.awsstudygroup.com/>Cloud Journey</a></b> <br>
+<img src="https://hitwebcounter.com/counter/counter.php?page=7830807&style=0038&nbdigits=9&type=page&initCount=0" title="Total CLoud Journey" alt="web counter" border=0>
+</left>
+<left>
+<br>
+<br>
+<b> Last Updated </b> <br>
+<i><font color=orange>30-01-2022</font></i>
+</left>
+<left>
+<br>
+<br>
+<b> Team </b> <br>
+<i> <a href=https://www.linkedin.com/in/sutrinh/ style=color:orange>Sử Trịnh </a> <br>
+<a href=https://www.linkedin.com/in/jotaguy style=color:orange>Gia Hưng </a> <br>
+<a href=https://www.linkedin.com/in/hiepnguyendt style=color:orange>Thanh Hiệp </a>
+</i>
+</left>
+<script async defer src=https://buttons.github.io/buttons.js></script>
+</section>
+</div>
+</nav>
+<section id=body>
+<div id=overlay></div>
+<div class="padding highlightable">
+<div>
+<div id=top-bar>
+<div id=breadcrumbs itemscope itemtype=http://data-vocabulary.org/Breadcrumb>
+<span id=sidebar-toggle-span>
+<a href=# id=sidebar-toggle data-sidebar-toggle>
+<i class="fas fa-bars"></i>
+</a>
+</span>
+<span id=toc-menu><i class="fas fa-list-alt"></i></span>
+<span class=links>
+<a href=/FCJ-Workshop/vi/>Quản lý Phiên Làm Việc (Session Management)</a> > Triển khai Tính năng Cảnh Báo và Phản Hồi Tự Động cho WebEnglish
+</span>
+</div>
+<div class=progress>
+<div class=wrapper>
+<nav id=TableOfContents>
+<ul>
+<li><a href=#-mục-tiêu>🎯 Mục Tiêu</a></li>
+<li><a href=#-1-tạo-cloudwatch-anomaly-detector>✅ 1. Tạo CloudWatch Anomaly Detector</a></li>
+<li><a href=#s3images4s31jpg><img src=/images/4.s3/1.jpg alt=S3></a></li>
+<li><a href=#-2-tạo-sns-topic-và-đăng-ký-email>✅ 2. Tạo SNS Topic và Đăng ký Email</a></li>
+<li><a href=#-3-tạo-cloudwatch-alarm-từ-anomaly-detector>✅ 3. Tạo CloudWatch Alarm từ Anomaly Detector</a></li>
+<li><a href=#-4-tạo-lambda-để-scale-ecs>✅ 4. Tạo Lambda để Scale ECS</a>
+<ul>
+<li><a href=#a-tạo-iam-role>A. Tạo IAM Role</a></li>
+<li><a href=#b-gắn-policy-cần-thiết>B. Gắn Policy cần thiết</a></li>
+</ul>
+</li>
+<li><a href=#-5-tạo-hàm-lambda-scale_ecs_servicepy>✅ 5. Tạo Hàm Lambda <code>scale_ecs_service.py</code></a></li>
+<li><a href=#-6-tạo-lambda-function>✅ 6. Tạo Lambda Function</a></li>
+<li><a href=#-7-gắn-lambda-vào-sns-và-cấp-quyền>✅ 7. Gắn Lambda vào SNS và Cấp Quyền</a></li>
+<li><a href=#-8-tùy-chọn-tạo-step-function-cho-scale-ecs>✅ 8. (Tùy chọn) Tạo Step Function cho Scale ECS</a>
+<ul>
+<li><a href=#file-scale-ecs-stepjson>File <code>scale-ecs-step.json</code></a></li>
+<li><a href=#tạo-role-cho-step-function>Tạo role cho Step Function</a></li>
+<li><a href=#tạo-state-machine>Tạo State Machine</a></li>
+</ul>
+</li>
+<li><a href=#-9-kiểm-thử-hệ-thống>✅ 9. Kiểm Thử Hệ Thống</a>
+<ul>
+<li><a href=#-tăng-cpu-ubuntu>🔹 Tăng CPU (Ubuntu):</a></li>
+<li><a href=#-hoặc-endpoint-spring-boot>🔹 Hoặc endpoint Spring Boot:</a></li>
+<li><a href=#-test-sns--lambda>🔹 Test SNS → Lambda:</a></li>
+</ul>
+</li>
+<li><a href=#-10-mẹo-debug--tối-ưu>✅ 10. Mẹo Debug & Tối Ưu</a></li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+</div>
+<div id=head-tags>
+</div>
+<div id=body-inner>
+<h1>
+Triển khai Tính năng Cảnh Báo và Phản Hồi Tự Động cho WebEnglish
+</h1>
+<hr>
+<h1 id=-triển-khai-cảnh-báo-và-phản-hồi-tự-động-với-cloudwatch-sns-và-lambda>🚨 Triển khai Cảnh Báo và Phản Hồi Tự Động với CloudWatch, SNS và Lambda</h1>
+<p>Tài liệu này hướng dẫn chi tiết cách tích hợp Amazon CloudWatch, SNS, Lambda, và (tuỳ chọn) DevOps Guru để phát hiện bất thường và tự động phản ứng trong hệ thống WebEnglish.</p>
+<hr>
+<h2 id=-mục-tiêu>🎯 Mục Tiêu</h2>
+<ul>
+<li>Phát hiện bất thường hiệu suất của EC2 hoặc ECS.</li>
+<li>Gửi cảnh báo qua email và kích hoạt Lambda để phản ứng.</li>
+<li>Tự động điều chỉnh số lượng task của dịch vụ <strong>ECS</strong> hoặc khởi động lại.</li>
+</ul>
+<hr>
+<h2 id=-1-tạo-cloudwatch-anomaly-detector>✅ 1. Tạo CloudWatch Anomaly Detector</h2>
+<p>Tạo trình phát hiện bất thường cho chỉ số <code>cpu_usage_active</code> trong <strong>namespace</strong> <code>WebEnglishMetrics</code>.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>aws cloudwatch put-anomaly-detector <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--namespace <span style=color:#e6db74>&#34;WebEnglishMetrics&#34;</span> <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--metric-name <span style=color:#e6db74>&#34;cpu_usage_active&#34;</span> <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--stat <span style=color:#e6db74>&#34;Average&#34;</span> <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--dimensions Name<span style=color:#f92672>=</span>InstanceId,Value<span style=color:#f92672>=</span>i-0817b4fd50252b509 <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--region ap-northeast-1
+</code></pre></div><h2 id=s3images4s31jpg><img src=/images/4.s3/1.jpg alt=S3></h2>
+<h2 id=-2-tạo-sns-topic-và-đăng-ký-email>✅ 2. Tạo SNS Topic và Đăng ký Email</h2>
+<p>Tạo một SNS topic để gửi cảnh báo và đăng ký một email để nhận thông báo.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>aws sns create-topic --name WebEnglishAlerts --region ap-northeast-1
+aws sns subscribe <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--topic-arn arn:aws:sns:ap-northeast-1:&lt;ACCOUNT_ID&gt;:WebEnglishAlerts <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--protocol email <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--notification-endpoint your-email@example.com <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--region ap-northeast-1
+</code></pre></div><blockquote>
+<p>📩 Đừng quên xác nhận email trong hộp thư đến để kích hoạt subscription.
+<img src=/images/4.s3/2.jpg alt=S3>
+<img src=/images/4.s3/3.jpg alt=S3>
+<img src=/images/4.s3/4.jpg alt=S3></p>
+</blockquote>
+<hr>
+<h2 id=-3-tạo-cloudwatch-alarm-từ-anomaly-detector>✅ 3. Tạo CloudWatch Alarm từ Anomaly Detector</h2>
+<p>Tạo một cảnh báo để kích hoạt khi chỉ số <code>cpu_usage_active</code> vượt quá ngưỡng bất thường.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>aws cloudwatch put-metric-alarm <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--alarm-name CPUAnomalyAlarm <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--evaluation-periods <span style=color:#ae81ff>2</span> <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--datapoints-to-alarm <span style=color:#ae81ff>2</span> <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--treat-missing-data notBreaching <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--comparison-operator GreaterThanUpperThreshold <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--metrics <span style=color:#e6db74>&#39;[
+</span><span style=color:#e6db74>{
+</span><span style=color:#e6db74>&#34;Id&#34;: &#34;m1&#34;,
+</span><span style=color:#e6db74>&#34;MetricStat&#34;: {
+</span><span style=color:#e6db74>&#34;Metric&#34;: {
+</span><span style=color:#e6db74>&#34;Namespace&#34;: &#34;WebEnglishMetrics&#34;,
+</span><span style=color:#e6db74>&#34;MetricName&#34;: &#34;cpu_usage_active&#34;,
+</span><span style=color:#e6db74>&#34;Dimensions&#34;: [
+</span><span style=color:#e6db74>{
+</span><span style=color:#e6db74>&#34;Name&#34;: &#34;InstanceId&#34;,
+</span><span style=color:#e6db74>&#34;Value&#34;: &#34;i-0817b4fd50252b509&#34;
+</span><span style=color:#e6db74>}
+</span><span style=color:#e6db74>]
+</span><span style=color:#e6db74>},
+</span><span style=color:#e6db74>&#34;Period&#34;: 60,
+</span><span style=color:#e6db74>&#34;Stat&#34;: &#34;Average&#34;
+</span><span style=color:#e6db74>},
+</span><span style=color:#e6db74>&#34;ReturnData&#34;: true
+</span><span style=color:#e6db74>},
+</span><span style=color:#e6db74>{
+</span><span style=color:#e6db74>&#34;Id&#34;: &#34;ad1&#34;,
+</span><span style=color:#e6db74>&#34;Expression&#34;: &#34;ANOMALY_DETECTION_BAND(m1, 2)&#34;,
+</span><span style=color:#e6db74>&#34;Label&#34;: &#34;AnomalyDetectionBand&#34;,
+</span><span style=color:#e6db74>&#34;ReturnData&#34;: true
+</span><span style=color:#e6db74>}
+</span><span style=color:#e6db74>]&#39;</span> <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--threshold-metric-id ad1 <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--alarm-actions arn:aws:sns:ap-northeast-1:&lt;ACCOUNT_ID&gt;:WebEnglishAlerts <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--region ap-northeast-1
+</code></pre></div><p><img src=/images/4.s3/5.jpg alt=S3></p>
+<hr>
+<h2 id=-4-tạo-lambda-để-scale-ecs>✅ 4. Tạo Lambda để Scale ECS</h2>
+<h3 id=a-tạo-iam-role>A. Tạo IAM Role</h3>
+<p>Tạo IAM role <code>LambdaScaleECSRole</code> với chính sách tin cậy cho Lambda.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>aws iam create-role <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--role-name LambdaScaleECSRole <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--assume-role-policy-document file://trust-policy.json
+</code></pre></div><p>Nội dung file <code>trust-policy.json</code>:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json>{
+<span style=color:#f92672>&#34;Version&#34;</span>: <span style=color:#e6db74>&#34;2012-10-17&#34;</span>,
+<span style=color:#f92672>&#34;Statement&#34;</span>: [
+{
+<span style=color:#f92672>&#34;Effect&#34;</span>: <span style=color:#e6db74>&#34;Allow&#34;</span>,
+<span style=color:#f92672>&#34;Principal&#34;</span>: {
+<span style=color:#f92672>&#34;Service&#34;</span>: <span style=color:#e6db74>&#34;lambda.amazonaws.com&#34;</span>
+},
+<span style=color:#f92672>&#34;Action&#34;</span>: <span style=color:#e6db74>&#34;sts:AssumeRole&#34;</span>
+}
+]
+}
+</code></pre></div><p><img src=/images/4.s3/6.jpg alt=S3>
+<img src=/images/4.s3/7.jpg alt=S3></p>
+<p><img src=/images/4.s3/8.jpg alt=S3></p>
+<h3 id=b-gắn-policy-cần-thiết>B. Gắn Policy cần thiết</h3>
+<p>Gắn các chính sách cần thiết để Lambda có thể ghi log và tương tác với ECS.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>aws iam attach-role-policy <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--role-name LambdaScaleECSRole <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+aws iam attach-role-policy <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--role-name LambdaScaleECSRole <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--policy-arn arn:aws:iam::aws:policy/AmazonECS_FullAccess
+</code></pre></div><p><img src=/images/4.s3/9.jpg alt=S3></p>
+<hr>
+<h2 id=-5-tạo-hàm-lambda-scale_ecs_servicepy>✅ 5. Tạo Hàm Lambda <code>scale_ecs_service.py</code></h2>
+<p>Hàm Python này sẽ gọi API của AWS để điều chỉnh số lượng <strong>task</strong> mong muốn của dịch vụ ECS.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#f92672>import</span> boto3
+
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>lambda_handler</span>(event, context):
+    ecs <span style=color:#f92672>=</span> boto3<span style=color:#f92672>.</span>client(<span style=color:#e6db74>&#39;ecs&#39;</span>)
+    cluster <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;MyCluster&#39;</span>
+    service <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;WebenglishService&#39;</span>
+    desired_count <span style=color:#f92672>=</span> <span style=color:#ae81ff>2</span>
+
+    <span style=color:#66d9ef>try</span>:
+        response <span style=color:#f92672>=</span> ecs<span style=color:#f92672>.</span>update_service(
+            cluster<span style=color:#f92672>=</span>cluster,
+            service<span style=color:#f92672>=</span>service,
+            desiredCount<span style=color:#f92672>=</span>desired_count
+        )
+        print(<span style=color:#e6db74>&#34;Service updated:&#34;</span>, response[<span style=color:#e6db74>&#39;service&#39;</span>][<span style=color:#e6db74>&#39;serviceName&#39;</span>])
+        <span style=color:#66d9ef>return</span> {
+            <span style=color:#e6db74>&#39;statusCode&#39;</span>: <span style=color:#ae81ff>200</span>,
+            <span style=color:#e6db74>&#39;body&#39;</span>: <span style=color:#e6db74>&#39;Scaling executed&#39;</span>
+        }
+    <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> e:
+        print(<span style=color:#e6db74>&#34;Error:&#34;</span>, str(e))
+        <span style=color:#66d9ef>return</span> {
+            <span style=color:#e6db74>&#39;statusCode&#39;</span>: <span style=color:#ae81ff>500</span>,
+            <span style=color:#e6db74>&#39;body&#39;</span>: str(e)
+        }
+</code></pre></div><p><img src=/images/4.s3/10.jpg alt=S3></p>
+<p><strong>Nén file:</strong></p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>zip <span style=color:#66d9ef>function</span>.zip scale_ecs_service.py
+</code></pre></div><hr>
+<h2 id=-6-tạo-lambda-function>✅ 6. Tạo Lambda Function</h2>
+<p>Tạo hàm Lambda có tên <code>ScaleWebEnglish</code> từ file nén vừa tạo.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>aws lambda create-function <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--function-name ScaleWebEnglish <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--runtime python3.9 <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--role arn:aws:iam::&lt;ACCOUNT_ID&gt;:role/LambdaScaleECSRole <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--handler scale_ecs_service.lambda_handler <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--zip-file fileb://function.zip <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--timeout <span style=color:#ae81ff>10</span> <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--region ap-northeast-1
+</code></pre></div><p><img src=/images/4.s3/11.jpg alt=S3></p>
+<hr>
+<h2 id=-7-gắn-lambda-vào-sns-và-cấp-quyền>✅ 7. Gắn Lambda vào SNS và Cấp Quyền</h2>
+<p>Đăng ký Lambda vào SNS topic để nó có thể được kích hoạt khi có cảnh báo.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>aws sns subscribe <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--topic-arn arn:aws:sns:ap-northeast-1:&lt;ACCOUNT_ID&gt;:WebEnglishAlerts <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--protocol lambda <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--notification-endpoint arn:aws:lambda:ap-northeast-1:&lt;ACCOUNT_ID&gt;:function:ScaleWebEnglish <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--region ap-northeast-1
+</code></pre></div><p><img src=/images/4.s3/12.jpg alt=S3></p>
+<p><strong>Cấp quyền cho SNS gọi Lambda:</strong></p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>aws lambda add-permission <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--function-name ScaleWebEnglish <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--statement-id snsInvokePermission <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--action lambda:InvokeFunction <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--principal sns.amazonaws.com <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--source-arn arn:aws:sns:ap-northeast-1:&lt;ACCOUNT_ID&gt;:WebEnglishAlerts <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--region ap-northeast-1
+</code></pre></div><p><img src=/images/4.s3/12.jpg alt=S3></p>
+<hr>
+<h2 id=-8-tùy-chọn-tạo-step-function-cho-scale-ecs>✅ 8. (Tùy chọn) Tạo Step Function cho Scale ECS</h2>
+<p>Sử dụng Step Functions để tạo luồng công việc tự động.</p>
+<h3 id=file-scale-ecs-stepjson>File <code>scale-ecs-step.json</code></h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json>{
+<span style=color:#f92672>&#34;Comment&#34;</span>: <span style=color:#e6db74>&#34;Scale ECS when high CPU&#34;</span>,
+<span style=color:#f92672>&#34;StartAt&#34;</span>: <span style=color:#e6db74>&#34;ScaleService&#34;</span>,
+<span style=color:#f92672>&#34;States&#34;</span>: {
+<span style=color:#f92672>&#34;ScaleService&#34;</span>: {
+<span style=color:#f92672>&#34;Type&#34;</span>: <span style=color:#e6db74>&#34;Task&#34;</span>,
+<span style=color:#f92672>&#34;Resource&#34;</span>: <span style=color:#e6db74>&#34;arn:aws:states:::aws-sdk:ecs:updateService&#34;</span>,
+<span style=color:#f92672>&#34;Parameters&#34;</span>: {
+<span style=color:#f92672>&#34;Cluster&#34;</span>: <span style=color:#e6db74>&#34;MyCluster&#34;</span>,
+<span style=color:#f92672>&#34;Service&#34;</span>: <span style=color:#e6db74>&#34;WebenglishService&#34;</span>,
+<span style=color:#f92672>&#34;DesiredCount&#34;</span>: <span style=color:#ae81ff>2</span>
+},
+<span style=color:#f92672>&#34;End&#34;</span>: <span style=color:#66d9ef>true</span>
+}
+}
+}
+</code></pre></div><h3 id=tạo-role-cho-step-function>Tạo role cho Step Function</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>aws iam create-role <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--role-name StepFunctionExecutionRole <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--assume-role-policy-document file://stepfunction-trust-policy.json
+aws iam attach-role-policy <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--role-name StepFunctionExecutionRole <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--policy-arn arn:aws:iam::aws:policy/AmazonECS_FullAccess
+</code></pre></div><h3 id=tạo-state-machine>Tạo State Machine</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>aws stepfunctions create-state-machine <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--name ScaleWebEnglishStepFunction <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--definition file://scale-ecs-step.json <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--role-arn arn:aws:iam::&lt;ACCOUNT_ID&gt;:role/StepFunctionExecutionRole <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--type STANDARD <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--region ap-northeast-1
+</code></pre></div><hr>
+<h2 id=-9-kiểm-thử-hệ-thống>✅ 9. Kiểm Thử Hệ Thống</h2>
+<table>
+<thead>
+<tr>
+<th style=text-align:left>Mục tiêu</th>
+<th style=text-align:left>Cách kiểm thử</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style=text-align:left><strong>Tăng CPU</strong></td>
+<td style=text-align:left><code>stress-ng</code> hoặc endpoint Spring Boot</td>
+</tr>
+<tr>
+<td style=text-align:left><strong>Log Lambda</strong></td>
+<td style=text-align:left><code>CloudWatch Logs</code> → <code>/aws/lambda/ScaleWebEnglish</code></td>
+</tr>
+<tr>
+<td style=text-align:left><strong>Scale ECS</strong></td>
+<td style=text-align:left>Console → <code>WebenglishService</code></td>
+</tr>
+<tr>
+<td style=text-align:left><strong>Hoạt động SNS</strong></td>
+<td style=text-align:left>Gửi thử message bằng CLI</td>
+</tr>
+</tbody>
+</table>
+<p><img src=/images/4.s3/15.jpg alt=S3></p>
+<h3 id=-tăng-cpu-ubuntu>🔹 Tăng CPU (Ubuntu):</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo apt update <span style=color:#f92672>&amp;&amp;</span> sudo apt install stress-ng -y
+stress-ng --cpu <span style=color:#ae81ff>2</span> --timeout 300s
+</code></pre></div><h3 id=-hoặc-endpoint-spring-boot>🔹 Hoặc endpoint Spring Boot:</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#a6e22e>@GetMapping</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#34;/load-cpu&#34;</span><span style=color:#f92672>)</span>
+<span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>loadCpu</span><span style=color:#f92672>()</span> <span style=color:#f92672>{</span>
+    <span style=color:#66d9ef>while</span> <span style=color:#f92672>(</span><span style=color:#66d9ef>true</span><span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
+        Math<span style=color:#f92672>.</span><span style=color:#a6e22e>pow</span><span style=color:#f92672>(</span>Math<span style=color:#f92672>.</span><span style=color:#a6e22e>random</span><span style=color:#f92672>(),</span> Math<span style=color:#f92672>.</span><span style=color:#a6e22e>random</span><span style=color:#f92672>());</span>
+    <span style=color:#f92672>}</span>
+<span style=color:#f92672>}</span>
+</code></pre></div><p>Gọi endpoint:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>curl http://your-ecs-app/load-cpu
+</code></pre></div><h3 id=-test-sns--lambda>🔹 Test SNS → Lambda:</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>aws sns publish <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--topic-arn arn:aws:sns:ap-northeast-1:&lt;ACCOUNT_ID&gt;:WebEnglishAlerts <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--message <span style=color:#e6db74>&#39;{&#34;test&#34;: &#34;SNS to Lambda&#34;}&#39;</span> <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--region ap-northeast-1
+</code></pre></div><p><img src=/images/4.s3/16.jpg alt=S3>
+<img src=/images/4.s3/17.jpg alt=S3></p>
+<hr>
+<h2 id=-10-mẹo-debug--tối-ưu>✅ 10. Mẹo Debug & Tối Ưu</h2>
+<table>
+<thead>
+<tr>
+<th style=text-align:left>Thành phần</th>
+<th style=text-align:left>Lưu ý</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style=text-align:left><strong>Lambda</strong></td>
+<td style=text-align:left>Thêm xử lý <code>exception</code> rõ ràng và log chi tiết.</td>
+</tr>
+<tr>
+<td style=text-align:left><strong>IAM Role</strong></td>
+<td style=text-align:left>Chỉ cấp quyền tối thiểu cần thiết để tuân thủ nguyên tắc <strong>Least Privilege</strong>.</td>
+</tr>
+<tr>
+<td style=text-align:left><strong>ECS</strong></td>
+<td style=text-align:left>Cân nhắc sử dụng chính sách <code>Target Tracking Policy</code> thay vì điều chỉnh thủ công trong Lambda.</td>
+</tr>
+<tr>
+<td style=text-align:left><strong>Alarm</strong></td>
+<td style=text-align:left>Điều chỉnh <code>evaluation-periods</code> hợp lý để tránh cảnh báo giả.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>📌 Test thủ công Lambda nếu cần:</strong></p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>aws lambda invoke <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--function-name ScaleWebEnglish <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--payload <span style=color:#e6db74>&#39;{}&#39;</span> <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>output.json <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--region ap-northeast-1
+</code></pre></div>
+<footer class=footline>
+</footer>
+</div>
+</div>
+<div id=navigation>
+<a class="nav nav-prev" href=/FCJ-Workshop/vi/3-monitoring/ title="Triển khai Giám sát Hệ thống"> <i class="fa fa-chevron-left"></i></a>
+<a class="nav nav-next" href=/FCJ-Workshop/vi/5-automated-response/ title="Automated Response" style=margin-right:0><i class="fa fa-chevron-right"></i></a>
+</div>
+</section>
+<div style=left:-1000px;overflow:scroll;position:absolute;top:-1000px;border:none;box-sizing:content-box;height:200px;margin:0;padding:0;width:200px>
+<div style=border:none;box-sizing:content-box;height:200px;margin:0;padding:0;width:200px></div>
+</div>
+<script src=/FCJ-Workshop/js/clipboard.min.js?1754753027></script>
+<script src=/FCJ-Workshop/js/perfect-scrollbar.min.js?1754753027></script>
+<script src=/FCJ-Workshop/js/perfect-scrollbar.jquery.min.js?1754753027></script>
+<script src=/FCJ-Workshop/js/jquery.sticky.js?1754753027></script>
+<script src=/FCJ-Workshop/js/featherlight.min.js?1754753027></script>
+<script src=/FCJ-Workshop/js/highlight.pack.js?1754753027></script>
+<script>hljs.initHighlightingOnLoad()</script>
+<script src=/FCJ-Workshop/js/modernizr.custom-3.6.0.js?1754753027></script>
+<script src=/FCJ-Workshop/js/learn.js?1754753027></script>
+<script src=/FCJ-Workshop/js/hugo-learn.js?1754753027></script>
+<link href=/FCJ-Workshop/mermaid/mermaid.css?1754753027 rel=stylesheet>
+<script src=/FCJ-Workshop/mermaid/mermaid.js?1754753027></script>
+<script>mermaid.initialize({startOnLoad:!0})</script>
+<script>(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-158079754-2','auto'),ga('send','pageview')</script>
+</body>
+</html>

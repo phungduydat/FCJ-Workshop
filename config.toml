@@ -1,6 +1,10 @@
 # Change the default theme to be use when building the site with Hugo
 theme = "hugo-theme-learn"
 
+# === BẮT BUỘC: điền đúng baseURL ===
+# Nếu repo là <username>.github.io        -> "https://<username>.github.io/"
+# Nếu repo là bất kỳ tên khác (project)   -> "https://<username>.github.io/<repo>/"
+baseURL = "https://phungduydat.github.io/FCJ-Workshop/"
 # For search functionality
 [outputs]
 home = [ "HTML", "RSS", "JSON"]

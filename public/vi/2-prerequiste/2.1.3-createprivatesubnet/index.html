@@ -1,0 +1,442 @@
+<!doctype html><html lang=vi class="js csstransforms3d">
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=generator content="Hugo 0.92.2">
+<meta name=description content>
+<meta name=author content="journeyoftheaverageguy@gmail.com">
+<link rel=icon href=/FCJ-Workshop/images/favicon.png type=image/png>
+<title>Triển Khai Dự Án AWS CDK Kết Nối ECS, EC2, IAM :: AWS System Manager</title>
+<link href=/FCJ-Workshop/css/nucleus.css?1754753027 rel=stylesheet>
+<link href=/FCJ-Workshop/css/fontawesome-all.min.css?1754753027 rel=stylesheet>
+<link href=/FCJ-Workshop/css/hybrid.css?1754753027 rel=stylesheet>
+<link href=/FCJ-Workshop/css/featherlight.min.css?1754753027 rel=stylesheet>
+<link href=/FCJ-Workshop/css/perfect-scrollbar.min.css?1754753027 rel=stylesheet>
+<link href=/FCJ-Workshop/css/auto-complete.css?1754753027 rel=stylesheet>
+<link href=/FCJ-Workshop/css/atom-one-dark-reasonable.css?1754753027 rel=stylesheet>
+<link href=/FCJ-Workshop/css/theme.css?1754753027 rel=stylesheet>
+<link href=/FCJ-Workshop/css/hugo-theme.css?1754753027 rel=stylesheet>
+<link href=/FCJ-Workshop/css/theme-workshop.css?1754753027 rel=stylesheet>
+<script src=/FCJ-Workshop/js/jquery-3.3.1.min.js?1754753027></script>
+<style>:root #header+#content>#left>#rlblock_left{display:none!important}</style>
+</head>
+<body data-url=/FCJ-Workshop/vi/2-prerequiste/2.1.3-createprivatesubnet/>
+<nav id=sidebar class=showVisitedLinks>
+<div id=header-wrapper>
+<div id=header>
+<a id=logo href=/><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" width="30%"><defs><style>.cls-1{fill:#fff}.cls-2{fill:#f90;fill-rule:evenodd}</style></defs><title>AWS-Logo_White-Color</title><path class="cls-1" d="M14.09 10.85a4.7 4.7.0 00.19 1.48 7.73 7.73.0 00.54 1.19.77.77.0 01.12.38.64.64.0 01-.32.49l-1 .7a.83.83.0 01-.44.15.69.69.0 01-.49-.23 3.8 3.8.0 01-.6-.77q-.25-.42-.51-1a6.14 6.14.0 01-4.89 2.3 4.54 4.54.0 01-3.32-1.19 4.27 4.27.0 01-1.22-3.2 4.28 4.28.0 011.46-3.4A6.06 6.06.0 017.69 6.46a12.47 12.47.0 011.76.13q.92.13 1.91.36V5.73a3.65 3.65.0 00-.79-2.66A3.81 3.81.0 007.86 2.3a7.71 7.71.0 00-1.79.22 12.78 12.78.0 00-1.79.57 4.55 4.55.0 01-.58.22h-.26q-.35.0-.35-.52V2a1.09 1.09.0 01.12-.58 1.2 1.2.0 01.47-.35A10.88 10.88.0 015.77.32 10.19 10.19.0 018.36.0a6 6 0 014.35 1.35 5.49 5.49.0 011.38 4.09zM7.34 13.38a5.36 5.36.0 001.72-.31A3.63 3.63.0 0010.63 12 2.62 2.62.0 0011.19 11a5.63 5.63.0 00.16-1.44v-.7a14.35 14.35.0 00-1.53-.28 12.37 12.37.0 00-1.56-.1 3.84 3.84.0 00-2.47.67A2.34 2.34.0 005 11a2.35 2.35.0 00.61 1.76A2.4 2.4.0 007.34 13.38zm13.35 1.8a1 1 0 01-.64-.16 1.3 1.3.0 01-.35-.65L15.81 1.51a3 3 0 01-.15-.67.36.36.0 01.41-.41H17.7a1 1 0 01.65.16 1.4 1.4.0 01.33.65l2.79 11 2.59-11A1.17 1.17.0 0124.39.6a1.1 1.1.0 01.67-.16H26.4a1.1 1.1.0 01.67.16 1.17 1.17.0 01.32.65L30 12.39 32.88 1.25A1.39 1.39.0 0133.22.6a1 1 0 01.65-.16h1.54a.36.36.0 01.41.41 1.36 1.36.0 010 .26 3.64 3.64.0 01-.12.41l-4 12.86a1.3 1.3.0 01-.35.65 1 1 0 01-.64.16H29.25a1 1 0 01-.67-.17 1.26 1.26.0 01-.32-.67L25.67 3.64l-2.56 10.7a1.26 1.26.0 01-.32.67 1 1 0 01-.67.17zm21.36.44a11.28 11.28.0 01-2.56-.29 7.44 7.44.0 01-1.92-.67 1 1 0 01-.61-.93v-.84q0-.52.38-.52a.9.9.0 01.31.06l.42.17a8.77 8.77.0 001.83.58 9.78 9.78.0 002 .2 4.48 4.48.0 002.43-.55 1.76 1.76.0 00.86-1.57 1.61 1.61.0 00-.45-1.16A4.29 4.29.0 0043 9.22l-2.41-.76A5.15 5.15.0 0138 6.78a3.94 3.94.0 01-.83-2.41 3.7 3.7.0 01.45-1.85 4.47 4.47.0 011.19-1.37 5.27 5.27.0 011.7-.86A7.4 7.4.0 0142.6.0a8.87 8.87.0 011.12.07q.57.07 1.08.19t.95.26a4.27 4.27.0 01.7.29 1.59 1.59.0 01.49.41.94.94.0 01.15.55v.79q0 .52-.38.52a1.76 1.76.0 01-.64-.2 7.74 7.74.0 00-3.2-.64 4.37 4.37.0 00-2.21.47 1.6 1.6.0 00-.79 1.48 1.58 1.58.0 00.49 1.18 4.94 4.94.0 001.83.92L44.55 7a5.08 5.08.0 012.57 1.6A3.76 3.76.0 0147.9 11a4.21 4.21.0 01-.44 1.93 4.4 4.4.0 01-1.21 1.47 5.43 5.43.0 01-1.85.93A8.25 8.25.0 0142.05 15.62z"/><path class="cls-2" d="M45.19 23.81C39.72 27.85 31.78 30 25 30A36.64 36.64.0 01.22 20.57c-.51-.46-.06-1.09.56-.74A49.78 49.78.0 0025.53 26.4 49.23 49.23.0 0044.4 22.53C45.32 22.14 46.1 23.14 45.19 23.81z"/><path class="cls-2" d="M47.47 21.21c-.7-.9-4.63-.42-6.39-.21-.53.06-.62-.4-.14-.74 3.13-2.2 8.27-1.57 8.86-.83s-.16 5.89-3.09 8.35c-.45.38-.88.18-.68-.32C46.69 25.8 48.17 22.11 47.47 21.21z"/></svg>
+</a>
+</div>
+<div class=searchbox>
+<label for=search-by><i class="fas fa-search"></i></label>
+<input data-search-input id=search-by type=search placeholder=Search...>
+<span data-search-clear><i class="fas fa-times"></i></span>
+</div>
+<script type=text/javascript src=/FCJ-Workshop/js/lunr.min.js?1754753027></script>
+<script type=text/javascript src=/FCJ-Workshop/js/auto-complete.js?1754753027></script>
+<script type=text/javascript>var baseurl="https://phungduydat.github.io/FCJ-Workshop//vi"</script>
+<script type=text/javascript src=/FCJ-Workshop/js/search.js?1754753027></script>
+</div>
+<div class=highlightable>
+<ul class=topics>
+<li data-nav-id=/FCJ-Workshop/vi/1-introduce/ title="Giới thiệu" class=dd-item>
+<a href=/FCJ-Workshop/vi/1-introduce/>
+<b> 1. </b> Giới thiệu
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+<li data-nav-id=/FCJ-Workshop/vi/2-prerequiste/ title="Các bước Chuẩn bị Môi trường AWS" class="dd-item
+parent">
+<a href=/FCJ-Workshop/vi/2-prerequiste/>
+<b> 2. </b> Các bước Chuẩn bị Môi trường AWS
+<i class="fas fa-check read-icon"></i>
+</a>
+<ul>
+<li data-nav-id=/FCJ-Workshop/vi/2-prerequiste/2.1.1-createec2/ title=" Hướng Dẫn Tạo EC2 Instance Default Trên AWS" class=dd-item>
+<a href=/FCJ-Workshop/vi/2-prerequiste/2.1.1-createec2/>
+<b> 2.1.1 </b> Hướng Dẫn Tạo EC2 Instance Default Trên AWS
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+<li data-nav-id=/FCJ-Workshop/vi/2-prerequiste/2.1.4-createvpc/ title=" Chuẩn Bị Môi Trường Tạo Docker Image Cho Dự Án Spring Boot" class=dd-item>
+<a href=/FCJ-Workshop/vi/2-prerequiste/2.1.4-createvpc/>
+<b> 2.1.2 </b> Chuẩn Bị Môi Trường Tạo Docker Image Cho Dự Án Spring Boot
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+<li data-nav-id=/FCJ-Workshop/vi/2-prerequiste/2.1.2-createpublicsubnet/ title="Deploying a Docker Image to AWS ECR on Linux " class=dd-item>
+<a href=/FCJ-Workshop/vi/2-prerequiste/2.1.2-createpublicsubnet/>
+<b> 2.1.2 </b> Deploying a Docker Image to AWS ECR on Linux
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+<li data-nav-id=/FCJ-Workshop/vi/2-prerequiste/2.1.3-createprivatesubnet/ title="Triển Khai Dự Án AWS CDK Kết Nối ECS, EC2, IAM" class="dd-item
+parent
+active">
+<a href=/FCJ-Workshop/vi/2-prerequiste/2.1.3-createprivatesubnet/>
+<b> 2.1.3 </b> Triển Khai Dự Án AWS CDK Kết Nối ECS, EC2, IAM
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+</ul>
+</li>
+<li data-nav-id=/FCJ-Workshop/vi/3-monitoring/ title="Triển khai Giám sát Hệ thống" class=dd-item>
+<a href=/FCJ-Workshop/vi/3-monitoring/>
+<b> 3 </b> Triển khai Giám sát Hệ thống
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+<li data-nav-id=/FCJ-Workshop/vi/4-anomaly-detection/ title="Triển khai Tính năng Cảnh Báo và Phản Hồi Tự Động cho WebEnglish" class=dd-item>
+<a href=/FCJ-Workshop/vi/4-anomaly-detection/>
+<b> 4. </b> Triển khai Tính năng Cảnh Báo và Phản Hồi Tự Động cho WebEnglish
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+<li data-nav-id=/FCJ-Workshop/vi/5-automated-response/ title="Automated Response" class=dd-item>
+<a href=/FCJ-Workshop/vi/5-automated-response/>
+<b> 5. </b> Automated Response
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+<li data-nav-id=/FCJ-Workshop/vi/7-dashboard/ title="Dashboard Development" class=dd-item>
+<a href=/FCJ-Workshop/vi/7-dashboard/>
+<b> 6. </b> Dashboard Development
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+<li data-nav-id=/FCJ-Workshop/vi/8-operations/ title="Operational Procedures" class=dd-item>
+<a href=/FCJ-Workshop/vi/8-operations/>
+<b>7. </b>Operational Procedures
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+<li data-nav-id=/FCJ-Workshop/vi/11-cleanup/ title="Clean up" class=dd-item>
+<a href=/FCJ-Workshop/vi/11-cleanup/>
+<b>8. </b>Clean up
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+</ul>
+<section id=shortcuts>
+<h3>More</h3>
+<ul>
+<li>
+<a class=padding href=https://www.facebook.com/groups/awsstudygroupfcj/><i class="fab fa-facebook"></i> AWS Study Group</a>
+</li>
+</ul>
+</section>
+<section id=prefooter>
+<hr>
+<ul>
+<li>
+<a class=padding>
+<i class="fas fa-language fa-fw"></i>
+<div class=select-style>
+<select id=select-language onchange="location=this.value"><option id=en value=https://phungduydat.github.io/FCJ-Workshop/2-prerequiste/2.1.3-createprivatesubnet/>English</option><option id=vi value=https://phungduydat.github.io/FCJ-Workshop/vi/2-prerequiste/2.1.3-createprivatesubnet/ selected>Tiếng Việt</option></select><svg id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="255" height="255" viewBox="0 0 255 255" style="enable-background:new 0 0 255 255"><g><g id="arrow-drop-down"><polygon points="0,63.75 127.5,191.25 255,63.75"/></g></g></svg>
+</div>
+</a>
+</li>
+<li><a class=padding href=# data-clear-history-toggle><i class="fas fa-history fa-fw"></i> Clear History</a></li>
+</ul>
+</section>
+<section id=footer>
+<left>
+<b> Workshop</b> <br>
+<img src="https://hitwebcounter.com/counter/counter.php?page=7920860&style=0038&nbdigits=9&type=page&initCount=0" title=Migrate alt="web counter" border=0></a> <br>
+<b> <a href=https://cloudjourney.awsstudygroup.com/>Cloud Journey</a></b> <br>
+<img src="https://hitwebcounter.com/counter/counter.php?page=7830807&style=0038&nbdigits=9&type=page&initCount=0" title="Total CLoud Journey" alt="web counter" border=0>
+</left>
+<left>
+<br>
+<br>
+<b> Last Updated </b> <br>
+<i><font color=orange>30-01-2022</font></i>
+</left>
+<left>
+<br>
+<br>
+<b> Team </b> <br>
+<i> <a href=https://www.linkedin.com/in/sutrinh/ style=color:orange>Sử Trịnh </a> <br>
+<a href=https://www.linkedin.com/in/jotaguy style=color:orange>Gia Hưng </a> <br>
+<a href=https://www.linkedin.com/in/hiepnguyendt style=color:orange>Thanh Hiệp </a>
+</i>
+</left>
+<script async defer src=https://buttons.github.io/buttons.js></script>
+</section>
+</div>
+</nav>
+<section id=body>
+<div id=overlay></div>
+<div class="padding highlightable">
+<div>
+<div id=top-bar>
+<div id=breadcrumbs itemscope itemtype=http://data-vocabulary.org/Breadcrumb>
+<span id=sidebar-toggle-span>
+<a href=# id=sidebar-toggle data-sidebar-toggle>
+<i class="fas fa-bars"></i>
+</a>
+</span>
+<span id=toc-menu><i class="fas fa-list-alt"></i></span>
+<span class=links>
+<a href=/FCJ-Workshop/vi/>Quản lý Phiên Làm Việc (Session Management)</a> > <a href=/FCJ-Workshop/vi/2-prerequiste/>Các bước Chuẩn bị Môi trường AWS</a> > Triển Khai Dự Án AWS CDK Kết Nối ECS, EC2, IAM
+</span>
+</div>
+<div class=progress>
+<div class=wrapper>
+<nav id=TableOfContents>
+<ul>
+<li><a href=#-1-cài-đặt-môi-trường-aws-cdk-trên-ubuntu>✅ 1. Cài Đặt Môi Trường AWS CDK Trên Ubuntu</a>
+<ul>
+<li><a href=#-gỡ-bỏ-nodejsnpm-cũ-nếu-có>🔹 Gỡ bỏ Node.js/NPM cũ (nếu có)</a></li>
+<li><a href=#-cài-đặt-nvm-và-nodejs-phiên-bản-ổn-định>🔹 Cài đặt NVM và Node.js (Phiên bản ổn định)</a></li>
+<li><a href=#-cài-đặt-aws-cdk>🔹 Cài đặt AWS CDK</a></li>
+</ul>
+</li>
+<li><a href=#-2-khởi-tạo-dự-án-cdk-typescript>✅ 2. Khởi Tạo Dự Án CDK TypeScript</a>
+<ul>
+<li><a href=#-cài-thêm-các-thư-viện-aws-cần-thiết>🔹 Cài thêm các thư viện AWS cần thiết</a></li>
+</ul>
+</li>
+<li><a href=#-3-tạo-stack-cdk-libwebenglish-cdk-stackts>✅ 3. Tạo Stack CDK (lib/webenglish-cdk-stack.ts)</a></li>
+<li><a href=#-4-cấu-hình-aws-cli>✅ 4. Cấu Hình AWS CLI</a>
+<ul>
+<li><a href=#-đăng-nhập-aws>🔹 Đăng nhập AWS</a></li>
+</ul>
+</li>
+<li><a href=#-5-tạo-iam-role-cho-ecs-task>✅ 5. Tạo IAM Role Cho ECS Task</a>
+<ul>
+<li><a href=#trên-aws-console>Trên AWS Console:</a></li>
+</ul>
+</li>
+<li><a href=#-6-bootstrap-cdk--deploy>✅ 6. Bootstrap CDK & Deploy</a></li>
+<li><a href=#-ghi-chú-bổ-sung>📌 Ghi Chú Bổ Sung</a></li>
+<li><a href=#-mở-rộng-sau-này>🧠 Mở Rộng Sau Này</a></li>
+<li><a href=#-tài-liệu-tham-khảo>🧾 Tài Liệu Tham Khảo</a></li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+</div>
+<div id=head-tags>
+</div>
+<div id=body-inner>
+<h1>
+Triển Khai Dự Án AWS CDK Kết Nối ECS, EC2, IAM
+</h1>
+<h1 id=-hướng-dẫn-triển-khai-ứng-dụng-trên-aws-bằng-aws-cdk>🚀 Hướng Dẫn Triển Khai Ứng Dụng Trên AWS Bằng AWS CDK</h1>
+<p>Tài liệu này hướng dẫn cách thiết lập và triển khai một ứng dụng Spring Boot sử dụng AWS CDK với các dịch vụ liên quan: ECS, EC2 (VPC), IAM và CloudWatch Logs. Dự án sử dụng AWS Fargate để chạy container mà không cần quản lý server.</p>
+<hr>
+<h2 id=-1-cài-đặt-môi-trường-aws-cdk-trên-ubuntu>✅ 1. Cài Đặt Môi Trường AWS CDK Trên Ubuntu</h2>
+<h3 id=-gỡ-bỏ-nodejsnpm-cũ-nếu-có>🔹 Gỡ bỏ Node.js/NPM cũ (nếu có)</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo yum remove -y nodejs npm
+sudo yum autoremove -y
+
+</code></pre></div><h3 id=-cài-đặt-nvm-và-nodejs-phiên-bản-ổn-định>🔹 Cài đặt NVM và Node.js (Phiên bản ổn định)</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+export NVM_DIR<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;</span>$HOME<span style=color:#e6db74>/.nvm&#34;</span>
+source <span style=color:#e6db74>&#34;</span>$NVM_DIR<span style=color:#e6db74>/nvm.sh&#34;</span>
+nvm install 22.9.0
+nvm use 22.9.0
+</code></pre></div><p><img src=/images/2.prerequisite/12-44.jpg alt=VPC></p>
+<h3 id=-cài-đặt-aws-cdk>🔹 Cài đặt AWS CDK</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>npm install -g aws-cdk
+</code></pre></div><p>Kiểm tra phiên bản:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>cdk --version
+</code></pre></div><p><img src=/images/2.prerequisite/12-45.jpg alt=VPC></p>
+<hr>
+<h2 id=-2-khởi-tạo-dự-án-cdk-typescript>✅ 2. Khởi Tạo Dự Án CDK TypeScript</h2>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>mkdir test-cdk <span style=color:#f92672>&amp;&amp;</span> cd test-cdk
+cdk init app --language typescript
+</code></pre></div><p><img src=/images/2.prerequisite/12-46.jpg alt=VPC></p>
+<h3 id=-cài-thêm-các-thư-viện-aws-cần-thiết>🔹 Cài thêm các thư viện AWS cần thiết</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>npm install @aws-cdk/aws-ecs @aws-cdk/aws-ec2 @aws-cdk/aws-ecs-patterns @aws-cdk/aws-rds
+</code></pre></div><p><img src=/images/2.prerequisite/12-47.jpg alt=VPC></p>
+<hr>
+<h2 id=-3-tạo-stack-cdk-libwebenglish-cdk-stackts>✅ 3. Tạo Stack CDK (lib/webenglish-cdk-stack.ts)</h2>
+<p>Tạo file <code>lib/webenglish-cdk-stack.ts</code> với nội dung:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ts data-lang=ts><span style=color:#66d9ef>import</span> <span style=color:#f92672>*</span> <span style=color:#66d9ef>as</span> <span style=color:#a6e22e>cdk</span> <span style=color:#66d9ef>from</span> <span style=color:#e6db74>&#39;aws-cdk-lib&#39;</span>;
+<span style=color:#66d9ef>import</span> <span style=color:#f92672>*</span> <span style=color:#66d9ef>as</span> <span style=color:#a6e22e>ec2</span> <span style=color:#66d9ef>from</span> <span style=color:#e6db74>&#39;aws-cdk-lib/aws-ec2&#39;</span>;
+<span style=color:#66d9ef>import</span> <span style=color:#f92672>*</span> <span style=color:#66d9ef>as</span> <span style=color:#a6e22e>ecs</span> <span style=color:#66d9ef>from</span> <span style=color:#e6db74>&#39;aws-cdk-lib/aws-ecs&#39;</span>;
+<span style=color:#66d9ef>import</span> <span style=color:#f92672>*</span> <span style=color:#66d9ef>as</span> <span style=color:#a6e22e>iam</span> <span style=color:#66d9ef>from</span> <span style=color:#e6db74>&#39;aws-cdk-lib/aws-iam&#39;</span>;
+<span style=color:#66d9ef>import</span> <span style=color:#f92672>*</span> <span style=color:#66d9ef>as</span> <span style=color:#a6e22e>logs</span> <span style=color:#66d9ef>from</span> <span style=color:#e6db74>&#39;aws-cdk-lib/aws-logs&#39;</span>;
+<span style=color:#66d9ef>import</span> { <span style=color:#a6e22e>Construct</span> } <span style=color:#66d9ef>from</span> <span style=color:#e6db74>&#39;constructs&#39;</span>;
+
+<span style=color:#66d9ef>export</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>TestCdkStack</span> <span style=color:#66d9ef>extends</span> <span style=color:#a6e22e>cdk</span>.<span style=color:#a6e22e>Stack</span> {
+  <span style=color:#66d9ef>constructor</span>(<span style=color:#a6e22e>scope</span>: <span style=color:#66d9ef>Construct</span>, <span style=color:#a6e22e>id</span>: <span style=color:#66d9ef>string</span>, <span style=color:#a6e22e>props?</span>: <span style=color:#66d9ef>cdk.StackProps</span>) {
+    <span style=color:#66d9ef>super</span>(<span style=color:#a6e22e>scope</span>, <span style=color:#a6e22e>id</span>, <span style=color:#a6e22e>props</span>);
+
+    <span style=color:#75715e>// VPC
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>vpc</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>ec2</span>.<span style=color:#a6e22e>Vpc</span>(<span style=color:#66d9ef>this</span>, <span style=color:#e6db74>&#39;MyVpc&#39;</span>, {
+      <span style=color:#a6e22e>maxAzs</span>: <span style=color:#66d9ef>2</span>,
+      <span style=color:#a6e22e>subnetConfiguration</span><span style=color:#f92672>:</span> [
+        { <span style=color:#a6e22e>subnetType</span>: <span style=color:#66d9ef>ec2.SubnetType.PUBLIC</span>, <span style=color:#a6e22e>name</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;Public&#39;</span> },
+        { <span style=color:#a6e22e>subnetType</span>: <span style=color:#66d9ef>ec2.SubnetType.PRIVATE_WITH_EGRESS</span>, <span style=color:#a6e22e>name</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;Private&#39;</span> },
+      ],
+    });
+
+    <span style=color:#75715e>// ECS Cluster
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>cluster</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>ecs</span>.<span style=color:#a6e22e>Cluster</span>(<span style=color:#66d9ef>this</span>, <span style=color:#e6db74>&#39;MyCluster&#39;</span>, { <span style=color:#a6e22e>vpc</span> });
+
+    <span style=color:#75715e>// IAM Execution Role (existing role)
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>executionRole</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>iam</span>.<span style=color:#a6e22e>Role</span>.<span style=color:#a6e22e>fromRoleArn</span>(
+      <span style=color:#66d9ef>this</span>,
+      <span style=color:#e6db74>&#39;EcsExecutionRole&#39;</span>,
+      <span style=color:#e6db74>&#39;arn:aws:iam::466322313916:role/WebenglishEcsExecutionRole&#39;</span>
+    );
+
+    <span style=color:#75715e>// Log Group
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>logGroup</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>logs</span>.<span style=color:#a6e22e>LogGroup</span>(<span style=color:#66d9ef>this</span>, <span style=color:#e6db74>&#39;WebenglishLogGroup&#39;</span>, {
+      <span style=color:#a6e22e>retention</span>: <span style=color:#66d9ef>logs.RetentionDays.ONE_WEEK</span>,
+    });
+
+    <span style=color:#75715e>// Fargate Task Definition
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>taskDefinition</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>ecs</span>.<span style=color:#a6e22e>FargateTaskDefinition</span>(<span style=color:#66d9ef>this</span>, <span style=color:#e6db74>&#39;TaskDef&#39;</span>, {
+      <span style=color:#a6e22e>memoryLimitMiB</span>: <span style=color:#66d9ef>2048</span>,
+      <span style=color:#a6e22e>cpu</span>: <span style=color:#66d9ef>1024</span>,
+      <span style=color:#a6e22e>executionRole</span>,
+    });
+
+    <span style=color:#75715e>// MySQL Container
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>mysqlContainer</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>taskDefinition</span>.<span style=color:#a6e22e>addContainer</span>(<span style=color:#e6db74>&#39;MySQLContainer&#39;</span>, {
+      <span style=color:#a6e22e>image</span>: <span style=color:#66d9ef>ecs.ContainerImage.fromRegistry</span>(
+        <span style=color:#e6db74>&#39;466322313916.dkr.ecr.ap-northeast-1.amazonaws.com/webenglish:mysql-8.0&#39;</span>
+      ),
+      <span style=color:#a6e22e>environment</span><span style=color:#f92672>:</span> {
+        <span style=color:#a6e22e>MYSQL_ROOT_PASSWORD</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;123456&#39;</span>,
+        <span style=color:#a6e22e>MYSQL_DATABASE</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;webenglish&#39;</span>,
+      },
+      <span style=color:#a6e22e>logging</span>: <span style=color:#66d9ef>ecs.LogDriver.awsLogs</span>({
+        <span style=color:#a6e22e>logGroup</span>,
+        <span style=color:#a6e22e>streamPrefix</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;mysql&#39;</span>,
+      }),
+      <span style=color:#a6e22e>portMappings</span><span style=color:#f92672>:</span> [{ <span style=color:#a6e22e>containerPort</span>: <span style=color:#66d9ef>3306</span> }],
+      <span style=color:#a6e22e>essential</span>: <span style=color:#66d9ef>true</span>,
+      <span style=color:#a6e22e>healthCheck</span><span style=color:#f92672>:</span> {
+        <span style=color:#a6e22e>command</span><span style=color:#f92672>:</span> [<span style=color:#e6db74>&#39;CMD&#39;</span>, <span style=color:#e6db74>&#39;mysqladmin&#39;</span>, <span style=color:#e6db74>&#39;ping&#39;</span>, <span style=color:#e6db74>&#39;-h&#39;</span>, <span style=color:#e6db74>&#39;localhost&#39;</span>],
+        <span style=color:#a6e22e>interval</span>: <span style=color:#66d9ef>cdk.Duration.seconds</span>(<span style=color:#ae81ff>10</span>),
+        <span style=color:#a6e22e>timeout</span>: <span style=color:#66d9ef>cdk.Duration.seconds</span>(<span style=color:#ae81ff>5</span>),
+        <span style=color:#a6e22e>retries</span>: <span style=color:#66d9ef>5</span>,
+        <span style=color:#a6e22e>startPeriod</span>: <span style=color:#66d9ef>cdk.Duration.seconds</span>(<span style=color:#ae81ff>20</span>),
+      },
+    });
+
+    <span style=color:#75715e>// App Container (Spring Boot)
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>appContainer</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>taskDefinition</span>.<span style=color:#a6e22e>addContainer</span>(<span style=color:#e6db74>&#39;WebenglishApp&#39;</span>, {
+      <span style=color:#a6e22e>image</span>: <span style=color:#66d9ef>ecs.ContainerImage.fromRegistry</span>(
+        <span style=color:#e6db74>&#39;466322313916.dkr.ecr.ap-northeast-1.amazonaws.com/webenglish:webenglish-app&#39;</span>
+      ),
+      <span style=color:#a6e22e>logging</span>: <span style=color:#66d9ef>ecs.LogDriver.awsLogs</span>({
+        <span style=color:#a6e22e>logGroup</span>,
+        <span style=color:#a6e22e>streamPrefix</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;webenglish-app&#39;</span>,
+      }),
+      <span style=color:#a6e22e>portMappings</span><span style=color:#f92672>:</span> [{ <span style=color:#a6e22e>containerPort</span>: <span style=color:#66d9ef>8080</span> }],
+      <span style=color:#a6e22e>environment</span><span style=color:#f92672>:</span> {
+        <span style=color:#a6e22e>SPRING_DATASOURCE_URL</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;jdbc:mysql://localhost:3306/webenglish&#39;</span>,
+        <span style=color:#a6e22e>SPRING_DATASOURCE_USERNAME</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;root&#39;</span>,
+        <span style=color:#a6e22e>SPRING_DATASOURCE_PASSWORD</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;123456&#39;</span>,
+      },
+    });
+
+    <span style=color:#75715e>// Container Dependency: app waits for MySQL to be healthy
+</span><span style=color:#75715e></span>    <span style=color:#a6e22e>appContainer</span>.<span style=color:#a6e22e>addContainerDependencies</span>({
+      <span style=color:#a6e22e>container</span>: <span style=color:#66d9ef>mysqlContainer</span>,
+      <span style=color:#a6e22e>condition</span>: <span style=color:#66d9ef>ecs.ContainerDependencyCondition.HEALTHY</span>,
+    });
+
+    <span style=color:#75715e>// Fargate Service
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>ecs</span>.<span style=color:#a6e22e>FargateService</span>(<span style=color:#66d9ef>this</span>, <span style=color:#e6db74>&#39;WebenglishService&#39;</span>, {
+      <span style=color:#a6e22e>cluster</span>,
+      <span style=color:#a6e22e>taskDefinition</span>,
+      <span style=color:#a6e22e>desiredCount</span>: <span style=color:#66d9ef>1</span>,
+      <span style=color:#a6e22e>assignPublicIp</span>: <span style=color:#66d9ef>true</span>,
+    });
+  }
+}
+
+</code></pre></div><hr>
+<h2 id=-4-cấu-hình-aws-cli>✅ 4. Cấu Hình AWS CLI</h2>
+<h3 id=-đăng-nhập-aws>🔹 Đăng nhập AWS</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>aws configure
+</code></pre></div><p>Nhập:</p>
+<ul>
+<li><code>AWS Access Key ID</code></li>
+<li><code>AWS Secret Access Key</code></li>
+<li><code>Region</code>: <code>ap-northeast-1</code></li>
+</ul>
+<hr>
+<h2 id=-5-tạo-iam-role-cho-ecs-task>✅ 5. Tạo IAM Role Cho ECS Task</h2>
+<h3 id=trên-aws-console>Trên AWS Console:</h3>
+<ol>
+<li>Vào <strong>IAM > Roles</strong></li>
+<li>Tạo role <code>WebenglishEcsExecutionRole</code></li>
+<li>Gán chính sách:
+<ul>
+<li><code>AmazonECSTaskExecutionRolePolicy</code></li>
+</ul>
+</li>
+<li>Ghi lại ARN của role:<br>
+Ví dụ:<br>
+<code>arn:aws:iam::466322313916:role/WebenglishEcsExecutionRole</code></li>
+</ol>
+<hr>
+<p><img src=/images/2.prerequisite/12-49.jpg alt=VPC></p>
+<h2 id=-6-bootstrap-cdk--deploy>✅ 6. Bootstrap CDK & Deploy</h2>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>cdk bootstrap aws://466322313916/ap-northeast-1
+cdk synth
+cdk deploy
+</code></pre></div><p><img src=/images/2.prerequisite/12-53.jpg alt=VPC>
+<img src=/images/2.prerequisite/12-52.jpg alt=VPC>
+<img src=/images/2.prerequisite/12-54.jpg alt=VPC>
+<img src=/images/2.prerequisite/12-55.jpg alt=VPC>
+<img src=/images/2.prerequisite/12-56.jpg alt=VPC>
+<img src=/images/2.prerequisite/12-57.jpg alt=VPC>
+<img src=/images/2.prerequisite/12-570.jpg alt=VPC>
+<img src=/images/2.prerequisite/12-571.jpg alt=VPC></p>
+<hr>
+<h2 id=-ghi-chú-bổ-sung>📌 Ghi Chú Bổ Sung</h2>
+<ul>
+<li>Bạn cần phải tạo ECR và đẩy image <code>webenglish:webenglish-app</code> lên trước đó.</li>
+<li>Nếu dùng database RDS thực sự, cần tạo một RDS instance và cập nhật <code>SPRING_DATASOURCE_URL</code>.</li>
+</ul>
+<hr>
+<h2 id=-mở-rộng-sau-này>🧠 Mở Rộng Sau Này</h2>
+<ul>
+<li>Tích hợp Load Balancer (ALB) bằng <code>ApplicationLoadBalancedFargateService</code></li>
+<li>Kết nối RDS thông qua Security Group và Secrets Manager</li>
+<li>Tích hợp CI/CD: GitHub Actions hoặc AWS CodePipeline</li>
+</ul>
+<hr>
+<h2 id=-tài-liệu-tham-khảo>🧾 Tài Liệu Tham Khảo</h2>
+<ul>
+<li><a href=https://docs.aws.amazon.com/cdk/>https://docs.aws.amazon.com/cdk/</a></li>
+<li><a href=https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html>https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html</a></li>
+</ul>
+<footer class=footline>
+</footer>
+</div>
+</div>
+<div id=navigation>
+<a class="nav nav-prev" href=/FCJ-Workshop/vi/2-prerequiste/2.1.2-createpublicsubnet/ title="Deploying a Docker Image to AWS ECR on Linux "> <i class="fa fa-chevron-left"></i></a>
+<a class="nav nav-next" href=/FCJ-Workshop/vi/3-monitoring/ title="Triển khai Giám sát Hệ thống" style=margin-right:0><i class="fa fa-chevron-right"></i></a>
+</div>
+</section>
+<div style=left:-1000px;overflow:scroll;position:absolute;top:-1000px;border:none;box-sizing:content-box;height:200px;margin:0;padding:0;width:200px>
+<div style=border:none;box-sizing:content-box;height:200px;margin:0;padding:0;width:200px></div>
+</div>
+<script src=/FCJ-Workshop/js/clipboard.min.js?1754753027></script>
+<script src=/FCJ-Workshop/js/perfect-scrollbar.min.js?1754753027></script>
+<script src=/FCJ-Workshop/js/perfect-scrollbar.jquery.min.js?1754753027></script>
+<script src=/FCJ-Workshop/js/jquery.sticky.js?1754753027></script>
+<script src=/FCJ-Workshop/js/featherlight.min.js?1754753027></script>
+<script src=/FCJ-Workshop/js/highlight.pack.js?1754753027></script>
+<script>hljs.initHighlightingOnLoad()</script>
+<script src=/FCJ-Workshop/js/modernizr.custom-3.6.0.js?1754753027></script>
+<script src=/FCJ-Workshop/js/learn.js?1754753027></script>
+<script src=/FCJ-Workshop/js/hugo-learn.js?1754753027></script>
+<link href=/FCJ-Workshop/mermaid/mermaid.css?1754753027 rel=stylesheet>
+<script src=/FCJ-Workshop/mermaid/mermaid.js?1754753027></script>
+<script>mermaid.initialize({startOnLoad:!0})</script>
+<script>(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-158079754-2','auto'),ga('send','pageview')</script>
+</body>
+</html>
