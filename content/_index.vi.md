@@ -24,13 +24,14 @@ Bài thực hành này sẽ giúp các nhóm DevOps giảm thiểu rủi ro vậ
 ### Nội dung
 
 1. [Giới thiệu](1-introduce/)
-2. [Yêu cầu chuẩn bị](2-Prerequiste/)
-3. [Triển khai Giám sát](3-monitoring/)
-4. [Phát hiện Bất thường](4-anomaly-detection/)
+2. [Chuẩn bị Môi trường AWS](2-Prerequiste/)
+3. [Triển khai Giám sát Hệ thống](3-monitoring/)
+4. [Triển khai Cảnh báo & Phản hồi Tự động](4-anomaly-detection/)
 5. [Phản hồi Tự động](5-automated-response/)
-6. [Quy trình Leo thang Sự cố](6-escalation/)
-7. [Phát triển Dashboard](7-dashboard/)
-8. [Quy trình Vận hành](8-operations/)
-<!-- 9. [Tối ưu Hiệu năng](9-performance/)
-10. [Điều chỉnh Cảnh báo](10-alert-tuning/) -->
-11. [Dọn dẹp Tài nguyên](11-cleanup/)
+6. [Phát triển Dashboard](7-dashboard/)
+7. [Quy trình Vận hành](8-operations/)
+8. [Dọn dẹp Tài nguyên](11-cleanup/)
+
+Mình đã chỉnh lại mục lục để thống nhất cấu trúc và cách đặt tên, đồng thời giữ đúng thứ tự logic:
+
+---

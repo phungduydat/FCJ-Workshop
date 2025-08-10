@@ -1,4 +1,3 @@
-
 ---
 title: "Clean up"
 date: "`r Sys.Date()`"
