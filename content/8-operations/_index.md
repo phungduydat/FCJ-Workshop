@@ -1,9 +1,9 @@
 ---
 title: "Operational Procedures"
 date: "`r Sys.Date()`"
-weight: 8
+weight: 7
 chapter: false
-pre: "<b>8. </b>"
+pre: "<b>7. </b>"
 ---
 
 # ✅ Operational Procedures & Optimization

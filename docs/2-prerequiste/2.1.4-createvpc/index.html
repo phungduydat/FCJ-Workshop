@@ -6,18 +6,18 @@
 <meta name=description content>
 <meta name=author content="journeyoftheaverageguy@gmail.com">
 <link rel=icon href=../../images/favicon.png type=image/png>
-<title>Preparing the Environment to Build a Docker Image for a Spring Boot Project :: AWS System Manager</title>
-<link href=../../css/nucleus.css?1754753453 rel=stylesheet>
-<link href=../../css/fontawesome-all.min.css?1754753453 rel=stylesheet>
-<link href=../../css/hybrid.css?1754753453 rel=stylesheet>
-<link href=../../css/featherlight.min.css?1754753453 rel=stylesheet>
-<link href=../../css/perfect-scrollbar.min.css?1754753453 rel=stylesheet>
-<link href=../../css/auto-complete.css?1754753453 rel=stylesheet>
-<link href=../../css/atom-one-dark-reasonable.css?1754753453 rel=stylesheet>
-<link href=../../css/theme.css?1754753453 rel=stylesheet>
-<link href=../../css/hugo-theme.css?1754753453 rel=stylesheet>
-<link href=../../css/theme-workshop.css?1754753453 rel=stylesheet>
-<script src=../../js/jquery-3.3.1.min.js?1754753453></script>
+<title>Preparing the Environment to Create a Docker Image for a Spring Boot Project :: AWS System Manager</title>
+<link href=../../css/nucleus.css?1754806848 rel=stylesheet>
+<link href=../../css/fontawesome-all.min.css?1754806848 rel=stylesheet>
+<link href=../../css/hybrid.css?1754806848 rel=stylesheet>
+<link href=../../css/featherlight.min.css?1754806848 rel=stylesheet>
+<link href=../../css/perfect-scrollbar.min.css?1754806848 rel=stylesheet>
+<link href=../../css/auto-complete.css?1754806848 rel=stylesheet>
+<link href=../../css/atom-one-dark-reasonable.css?1754806848 rel=stylesheet>
+<link href=../../css/theme.css?1754806848 rel=stylesheet>
+<link href=../../css/hugo-theme.css?1754806848 rel=stylesheet>
+<link href=../../css/theme-workshop.css?1754806848 rel=stylesheet>
+<script src=../../js/jquery-3.3.1.min.js?1754806848></script>
 <style>:root #header+#content>#left>#rlblock_left{display:none!important}</style>
 </head>
 <body data-url=../../2-prerequiste/2.1.4-createvpc/>
@@ -32,10 +32,10 @@
 <input data-search-input id=search-by type=search placeholder=Search...>
 <span data-search-clear><i class="fas fa-times"></i></span>
 </div>
-<script type=text/javascript src=../../js/lunr.min.js?1754753453></script>
-<script type=text/javascript src=../../js/auto-complete.js?1754753453></script>
+<script type=text/javascript src=../../js/lunr.min.js?1754806848></script>
+<script type=text/javascript src=../../js/auto-complete.js?1754806848></script>
 <script type=text/javascript>var baseurl="https://phungduydat.github.io/FCJ-Workshop/"</script>
-<script type=text/javascript src=../../js/search.js?1754753453></script>
+<script type=text/javascript src=../../js/search.js?1754806848></script>
 </div>
 <div class=highlightable>
 <ul class=topics>
@@ -58,23 +58,23 @@ parent">
 <i class="fas fa-check read-icon"></i>
 </a>
 </li>
-<li data-nav-id=/2-prerequiste/2.1.4-createvpc/ title="Preparing the Environment to Build a Docker Image for a Spring Boot Project" class="dd-item
+<li data-nav-id=/2-prerequiste/2.1.4-createvpc/ title="Preparing the Environment to Create a Docker Image for a Spring Boot Project" class="dd-item
 parent
 active">
 <a href=../../2-prerequiste/2.1.4-createvpc/>
-<b> 2.1.4 </b> Preparing the Environment to Build a Docker Image for a Spring Boot Project
+<b> 2.1.2 </b> Preparing the Environment to Create a Docker Image for a Spring Boot Project
 <i class="fas fa-check read-icon"></i>
 </a>
 </li>
-<li data-nav-id=/2-prerequiste/2.1.2-createpublicsubnet/ title="Create Public Subnet" class=dd-item>
+<li data-nav-id=/2-prerequiste/2.1.2-createpublicsubnet/ title="Deploying a Docker Image to AWS ECR on Linux" class=dd-item>
 <a href=../../2-prerequiste/2.1.2-createpublicsubnet/>
-<b> 2.1.2 </b> Create Public Subnet
+<b> 2.1.2 </b> Deploying a Docker Image to AWS ECR on Linux
 <i class="fas fa-check read-icon"></i>
 </a>
 </li>
-<li data-nav-id=/2-prerequiste/2.1.3-createprivatesubnet/ title="Deploying an AWS CDK Project Connecting ECS, EC2, and IAM" class=dd-item>
+<li data-nav-id=/2-prerequiste/2.1.3-createprivatesubnet/ title="Deploying an AWS CDK Project Connecting ECS, EC2, IAM" class=dd-item>
 <a href=../../2-prerequiste/2.1.3-createprivatesubnet/>
-<b> 2.1.3 </b> Deploying an AWS CDK Project Connecting ECS, EC2, and IAM
+<b> 2.1.3 </b> Deploying an AWS CDK Project Connecting ECS, EC2, IAM
 <i class="fas fa-check read-icon"></i>
 </a>
 </li>
@@ -100,19 +100,19 @@ active">
 </li>
 <li data-nav-id=/7-dashboard/ title="Dashboard Development" class=dd-item>
 <a href=../../7-dashboard/>
-<b> 5. </b> Dashboard Development
+<b> 6. </b> Dashboard Development
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+<li data-nav-id=/8-operations/ title="Operational Procedures" class=dd-item>
+<a href=../../8-operations/>
+<b>7. </b>Operational Procedures
 <i class="fas fa-check read-icon"></i>
 </a>
 </li>
 <li data-nav-id=/11-cleanup/ title="Clean up" class=dd-item>
 <a href=../../11-cleanup/>
 <b>8. </b>Clean up
-<i class="fas fa-check read-icon"></i>
-</a>
-</li>
-<li data-nav-id=/8-operations/ title="Operational Procedures" class=dd-item>
-<a href=../../8-operations/>
-<b>8. </b>Operational Procedures
 <i class="fas fa-check read-icon"></i>
 </a>
 </li>
@@ -178,18 +178,38 @@ active">
 </span>
 <span id=toc-menu><i class="fas fa-list-alt"></i></span>
 <span class=links>
-<a href=../../>Session Management</a> > <a href=../../2-prerequiste/>Preparation Steps</a> > Preparing the Environment to Build a Docker Image for a Spring Boot Project
+<a href=../../>Session Management</a> > <a href=../../2-prerequiste/>Preparation Steps</a> > Preparing the Environment to Create a Docker Image for a Spring Boot Project
 </span>
 </div>
 <div class=progress>
 <div class=wrapper>
 <nav id=TableOfContents>
 <ul>
-<li>
+<li><a href=#-1-install-java-openjdk-21>🔧 1. Install Java (OpenJDK 21)</a></li>
+<li><a href=#-2-install-maven>🔧 2. Install Maven</a>
 <ul>
-<li></li>
+<li><a href=#-download-maven>📥 Download Maven</a></li>
+<li><a href=#-extract-maven>📦 Extract Maven</a></li>
+<li><a href=#-configure-environment-variables>⚙️ Configure Environment Variables</a></li>
+<li><a href=#-verify-maven>✅ Verify Maven</a></li>
 </ul>
 </li>
+<li><a href=#-3-install-docker>🐳 3. Install Docker</a>
+<ul>
+<li><a href=#-remove-old-docker-versions-if-any>🧹 Remove Old Docker Versions (if any)</a></li>
+<li><a href=#-install-dependencies>📦 Install Dependencies</a></li>
+<li><a href=#-add-docker-ce-repository>🗂️ Add Docker CE Repository</a></li>
+<li><a href=#-install-docker-2811>🐳 Install Docker 28.1.1</a></li>
+<li><a href=#-start-docker>🚀 Start Docker</a></li>
+</ul>
+</li>
+<li><a href=#-4-install-docker-compose>🧱 4. Install Docker Compose</a></li>
+<li><a href=#-5-install-git--clone-the-project>📆 5. Install Git & Clone the Project</a></li>
+<li><a href=#-6-build-spring-boot-skip-tests>🚰 6. Build Spring Boot (Skip Tests)</a></li>
+<li><a href=#-7-create-dockerfile>📄 7. Create Dockerfile</a></li>
+<li><a href=#-8-create-docker-composeyml-file>🧩 8. Create docker-compose.yml File</a></li>
+<li><a href=#-9-configure-applicationproperties>⚙️ 9. Configure <code>application.properties</code></a></li>
+<li><a href=#-10-build--run-docker-compose>🧪 10. Build & Run Docker Compose</a></li>
 </ul>
 </nav>
 </div>
@@ -200,52 +220,158 @@ active">
 </div>
 <div id=body-inner>
 <h1>
-Preparing the Environment to Build a Docker Image for a Spring Boot Project
+Preparing the Environment to Create a Docker Image for a Spring Boot Project
 </h1>
-<h4 id=create-vpc-lab-vpc>Create VPC <strong>Lab VPC</strong></h4>
-<ol>
-<li>Go to <a href=https://console.aws.amazon.com/vpc/home>VPC service management console</a>
-<ul>
-<li>Click <strong>Your VPC</strong>.</li>
-<li>Click <strong>Create VPC</strong>.</li>
-</ul>
-</li>
-</ol>
-<p><img src=../../images/2.prerequisite/001-createvpc.png alt=VPC></p>
-<ol start=2>
-<li>At the <strong>Create VPC</strong> page.
-<ul>
-<li>In the <strong>Name tag</strong> field, enter <strong>Lab VPC</strong>.</li>
-<li>In the <strong>IPv4 CIDR</strong> field, enter: <strong>10.10.0.0/16</strong>.</li>
-<li>Click <strong>Create VPC</strong>.</li>
-</ul>
-</li>
-</ol>
-<p><img src=../../images/2.prerequisite/002-createvpc.png alt=VPC></p>
+<hr>
+<hr>
+<h2 id=-1-install-java-openjdk-21>🔧 1. Install Java (OpenJDK 21)</h2>
+<p>To run the Spring Boot application and build the <code>.jar</code> file, you need Java JDK 21.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># Update package list and upgrade the system</span>
+sudo yum update -y
+
+<span style=color:#75715e># Install Java OpenJDK 21</span>
+sudo amazon-linux-extras enable corretto8
+sudo yum install -y java-21-amazon-corretto-devel
+
+<span style=color:#75715e># Verify installed version</span>
+java -version
+</code></pre></div><p><img src=../../images/2.prerequisite/12-30.jpg alt=VPC></p>
+<hr>
+<h2 id=-2-install-maven>🔧 2. Install Maven</h2>
+<h3 id=-download-maven>📥 Download Maven</h3>
+<p>Download the latest Maven binary (version <strong>3.9.11</strong> as of July 2025):</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo yum install java-11-amazon-corretto-devel
+wget https://archive.apache.org/dist/maven/maven-3/3.9.1/binaries/apache-maven-3.9.1-bin.tar.gz
+</code></pre></div><p><img src=../../images/2.prerequisite/12-58.jpg alt=VPC></p>
+<h3 id=-extract-maven>📦 Extract Maven</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>tar xzvf apache-maven-3.9.1-bin.tar.gz  
+sudo mv apache-maven-3.9.1 /opt/
+</code></pre></div><p><img src=../../images/2.prerequisite/12-59.jpg alt=VPC>
+<img src=../../images/2.prerequisite/12-60.jpg alt=VPC></p>
+<h3 id=-configure-environment-variables>⚙️ Configure Environment Variables</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>echo <span style=color:#e6db74>&#39;export M2_HOME=/opt/apache-maven-3.9.1&#39;</span> &gt;&gt; ~/.bashrc
+echo <span style=color:#e6db74>&#39;export PATH=$PATH:$M2_HOME/bin&#39;</span> &gt;&gt; ~/.bashrc
+source ~/.bashrc
+</code></pre></div><h3 id=-verify-maven>✅ Verify Maven</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>mvn -version
+</code></pre></div><p><img src=../../images/2.prerequisite/12-61.jpg alt=VPC></p>
+<hr>
+<h2 id=-3-install-docker>🐳 3. Install Docker</h2>
+<h3 id=-remove-old-docker-versions-if-any>🧹 Remove Old Docker Versions (if any)</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo dnf remove -y docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-engine
+</code></pre></div><p><img src=../../images/2.prerequisite/12-14.jpg alt=VPC></p>
+<h3 id=-install-dependencies>📦 Install Dependencies</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo dnf install -y dnf-plugins-core device-mapper-persistent-data lvm2
+</code></pre></div><h3 id=-add-docker-ce-repository>🗂️ Add Docker CE Repository</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+sudo sed -i <span style=color:#e6db74>&#39;s/$releasever/41/g&#39;</span> /etc/yum.repos.d/docker-ce.repo
+</code></pre></div><h3 id=-install-docker-2811>🐳 Install Docker 28.1.1</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo dnf install -y docker-ce-28.1.1 docker-ce-cli-28.1.1 containerd.io docker-buildx-plugin docker-compose-plugin
+</code></pre></div><p>If version 28.1.1 is not listed:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>dnf list --showduplicates docker-ce
+</code></pre></div><h3 id=-start-docker>🚀 Start Docker</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo systemctl start docker
+sudo systemctl enable docker
+</code></pre></div><hr>
+<h2 id=-4-install-docker-compose>🧱 4. Install Docker Compose</h2>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo curl -L <span style=color:#e6db74>&#34;https://github.com/docker/compose/releases/download/v2.27.0/docker-compose-</span><span style=color:#66d9ef>$(</span>uname -s<span style=color:#66d9ef>)</span><span style=color:#e6db74>-</span><span style=color:#66d9ef>$(</span>uname -m<span style=color:#66d9ef>)</span><span style=color:#e6db74>&#34;</span> -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+docker-compose --version
+</code></pre></div><p><img src=../../images/2.prerequisite/12-17.jpg alt=VPC></p>
+<hr>
+<h2 id=-5-install-git--clone-the-project>📆 5. Install Git & Clone the Project</h2>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo yum install -y git
+git clone https://github.com/phungduydat/webenglish.git
+cd webenglish
+</code></pre></div><p><img src=../../images/2.prerequisite/12-62.jpg alt=VPC></p>
+<hr>
+<h2 id=-6-build-spring-boot-skip-tests>🚰 6. Build Spring Boot (Skip Tests)</h2>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>mvn clean package -DskipTests
+</code></pre></div><p><img src=../../images/2.prerequisite/12-25.jpg alt=VPC></p>
+<p>The jar file will be located in the <code>target/</code> directory.</p>
+<hr>
+<h2 id=-7-create-dockerfile>📄 7. Create Dockerfile</h2>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-dockerfile data-lang=dockerfile><span style=color:#66d9ef>FROM</span><span style=color:#e6db74> openjdk:21-jdk</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>ARG</span> JAR_FILE<span style=color:#f92672>=</span>target/*.jar<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>COPY</span> <span style=color:#e6db74>${</span>JAR_FILE<span style=color:#e6db74>}</span> app.jar<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>ENTRYPOINT</span> [<span style=color:#e6db74>&#34;java&#34;</span>,<span style=color:#e6db74>&#34;-jar&#34;</span>,<span style=color:#e6db74>&#34;/app.jar&#34;</span>]<span style=color:#960050;background-color:#1e0010>
+</span></code></pre></div><p><img src=../../images/2.prerequisite/12-26.jpg alt=VPC></p>
+<hr>
+<h2 id=-8-create-docker-composeyml-file>🧩 8. Create docker-compose.yml File</h2>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>services</span>:
+  <span style=color:#f92672>mysql</span>:
+    <span style=color:#f92672>image</span>: <span style=color:#ae81ff>mysql:8.0</span>
+    <span style=color:#f92672>container_name</span>: <span style=color:#ae81ff>mysql</span>
+    <span style=color:#f92672>restart</span>: <span style=color:#ae81ff>always</span>
+    <span style=color:#f92672>environment</span>:
+      <span style=color:#f92672>MYSQL_ROOT_PASSWORD</span>: <span style=color:#ae81ff>123456</span>
+      <span style=color:#f92672>MYSQL_DATABASE</span>: <span style=color:#ae81ff>webenglish</span>
+    <span style=color:#f92672>ports</span>:
+      - <span style=color:#e6db74>&#34;3306:3306&#34;</span>
+    <span style=color:#f92672>volumes</span>:
+      - <span style=color:#ae81ff>mysql_data:/var/lib/mysql</span>
+
+  <span style=color:#f92672>app</span>:
+    <span style=color:#f92672>build</span>: <span style=color:#ae81ff>.</span>
+    <span style=color:#f92672>container_name</span>: <span style=color:#ae81ff>webenglish-app</span>
+    <span style=color:#f92672>ports</span>:
+      - <span style=color:#e6db74>&#34;8080:8090&#34;</span>
+    <span style=color:#f92672>depends_on</span>:
+      - <span style=color:#ae81ff>mysql</span>
+    <span style=color:#f92672>environment</span>:
+      <span style=color:#f92672>SPRING_DATASOURCE_URL</span>: <span style=color:#ae81ff>jdbc:mysql://mysql:3306/webenglish</span>
+      <span style=color:#f92672>SPRING_DATASOURCE_USERNAME</span>: <span style=color:#ae81ff>root</span>
+      <span style=color:#f92672>SPRING_DATASOURCE_PASSWORD</span>: <span style=color:#ae81ff>123456</span>
+    <span style=color:#f92672>volumes</span>:
+      - <span style=color:#ae81ff>./src/main/resources:/app/resources</span>
+
+<span style=color:#f92672>volumes</span>:
+  <span style=color:#f92672>mysql_data</span>:
+</code></pre></div><p><img src=../../images/2.prerequisite/12-27.jpg alt=VPC></p>
+<hr>
+<h2 id=-9-configure-applicationproperties>⚙️ 9. Configure <code>application.properties</code></h2>
+<pre tabindex=0><code class=language-properties data-lang=properties>spring.datasource.url=${SPRING_DATASOURCE_URL}
+spring.datasource.username=${SPRING_DATASOURCE_USERNAME}
+spring.datasource.password=${SPRING_DATASOURCE_PASSWORD}
+</code></pre><p><img src=../../images/2.prerequisite/12-28.jpg alt=VPC></p>
+<hr>
+<h2 id=-10-build--run-docker-compose>🧪 10. Build & Run Docker Compose</h2>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>docker compose up --build
+</code></pre></div><p><img src=../../images/2.prerequisite/12-29.jpg alt=VPC></p>
+<p>Check:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>docker ps
+docker compose logs
+</code></pre></div><hr>
+<p><strong>Author:</strong> Phùng Duy Đạt
+<strong>GitHub:</strong> <a href=https://github.com/phungduydat/webenglish>https://github.com/phungduydat/webenglish</a></p>
+<pre tabindex=0><code>
+---
+
+</code></pre>
 <footer class=footline>
 </footer>
 </div>
 </div>
 <div id=navigation>
 <a class="nav nav-prev" href=../../2-prerequiste/2.1.1-createec2/ title=" Guide to Launching a Default EC2 Instance on AWS"> <i class="fa fa-chevron-left"></i></a>
-<a class="nav nav-next" href=../../2-prerequiste/2.1.2-createpublicsubnet/ title="Create Public Subnet" style=margin-right:0><i class="fa fa-chevron-right"></i></a>
+<a class="nav nav-next" href=../../2-prerequiste/2.1.2-createpublicsubnet/ title="Deploying a Docker Image to AWS ECR on Linux" style=margin-right:0><i class="fa fa-chevron-right"></i></a>
 </div>
 </section>
 <div style=left:-1000px;overflow:scroll;position:absolute;top:-1000px;border:none;box-sizing:content-box;height:200px;margin:0;padding:0;width:200px>
 <div style=border:none;box-sizing:content-box;height:200px;margin:0;padding:0;width:200px></div>
 </div>
-<script src=../../js/clipboard.min.js?1754753453></script>
-<script src=../../js/perfect-scrollbar.min.js?1754753453></script>
-<script src=../../js/perfect-scrollbar.jquery.min.js?1754753453></script>
-<script src=../../js/jquery.sticky.js?1754753453></script>
-<script src=../../js/featherlight.min.js?1754753453></script>
-<script src=../../js/highlight.pack.js?1754753453></script>
+<script src=../../js/clipboard.min.js?1754806848></script>
+<script src=../../js/perfect-scrollbar.min.js?1754806848></script>
+<script src=../../js/perfect-scrollbar.jquery.min.js?1754806848></script>
+<script src=../../js/jquery.sticky.js?1754806848></script>
+<script src=../../js/featherlight.min.js?1754806848></script>
+<script src=../../js/highlight.pack.js?1754806848></script>
 <script>hljs.initHighlightingOnLoad()</script>
-<script src=../../js/modernizr.custom-3.6.0.js?1754753453></script>
-<script src=../../js/learn.js?1754753453></script>
-<script src=../../js/hugo-learn.js?1754753453></script>
-<link href=../../mermaid/mermaid.css?1754753453 rel=stylesheet>
-<script src=../../mermaid/mermaid.js?1754753453></script>
+<script src=../../js/modernizr.custom-3.6.0.js?1754806848></script>
+<script src=../../js/learn.js?1754806848></script>
+<script src=../../js/hugo-learn.js?1754806848></script>
+<link href=../../mermaid/mermaid.css?1754806848 rel=stylesheet>
+<script src=../../mermaid/mermaid.js?1754806848></script>
 <script>mermaid.initialize({startOnLoad:!0})</script>
 <script>(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-158079754-2','auto'),ga('send','pageview')</script>
 </body>

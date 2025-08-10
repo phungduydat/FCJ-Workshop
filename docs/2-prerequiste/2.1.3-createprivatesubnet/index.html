@@ -6,18 +6,18 @@
 <meta name=description content>
 <meta name=author content="journeyoftheaverageguy@gmail.com">
 <link rel=icon href=../../images/favicon.png type=image/png>
-<title>Deploying an AWS CDK Project Connecting ECS, EC2, and IAM :: AWS System Manager</title>
-<link href=../../css/nucleus.css?1754753453 rel=stylesheet>
-<link href=../../css/fontawesome-all.min.css?1754753453 rel=stylesheet>
-<link href=../../css/hybrid.css?1754753453 rel=stylesheet>
-<link href=../../css/featherlight.min.css?1754753453 rel=stylesheet>
-<link href=../../css/perfect-scrollbar.min.css?1754753453 rel=stylesheet>
-<link href=../../css/auto-complete.css?1754753453 rel=stylesheet>
-<link href=../../css/atom-one-dark-reasonable.css?1754753453 rel=stylesheet>
-<link href=../../css/theme.css?1754753453 rel=stylesheet>
-<link href=../../css/hugo-theme.css?1754753453 rel=stylesheet>
-<link href=../../css/theme-workshop.css?1754753453 rel=stylesheet>
-<script src=../../js/jquery-3.3.1.min.js?1754753453></script>
+<title>Deploying an AWS CDK Project Connecting ECS, EC2, IAM :: AWS System Manager</title>
+<link href=../../css/nucleus.css?1754806848 rel=stylesheet>
+<link href=../../css/fontawesome-all.min.css?1754806848 rel=stylesheet>
+<link href=../../css/hybrid.css?1754806848 rel=stylesheet>
+<link href=../../css/featherlight.min.css?1754806848 rel=stylesheet>
+<link href=../../css/perfect-scrollbar.min.css?1754806848 rel=stylesheet>
+<link href=../../css/auto-complete.css?1754806848 rel=stylesheet>
+<link href=../../css/atom-one-dark-reasonable.css?1754806848 rel=stylesheet>
+<link href=../../css/theme.css?1754806848 rel=stylesheet>
+<link href=../../css/hugo-theme.css?1754806848 rel=stylesheet>
+<link href=../../css/theme-workshop.css?1754806848 rel=stylesheet>
+<script src=../../js/jquery-3.3.1.min.js?1754806848></script>
 <style>:root #header+#content>#left>#rlblock_left{display:none!important}</style>
 </head>
 <body data-url=../../2-prerequiste/2.1.3-createprivatesubnet/>
@@ -32,10 +32,10 @@
 <input data-search-input id=search-by type=search placeholder=Search...>
 <span data-search-clear><i class="fas fa-times"></i></span>
 </div>
-<script type=text/javascript src=../../js/lunr.min.js?1754753453></script>
-<script type=text/javascript src=../../js/auto-complete.js?1754753453></script>
+<script type=text/javascript src=../../js/lunr.min.js?1754806848></script>
+<script type=text/javascript src=../../js/auto-complete.js?1754806848></script>
 <script type=text/javascript>var baseurl="https://phungduydat.github.io/FCJ-Workshop/"</script>
-<script type=text/javascript src=../../js/search.js?1754753453></script>
+<script type=text/javascript src=../../js/search.js?1754806848></script>
 </div>
 <div class=highlightable>
 <ul class=topics>
@@ -58,23 +58,23 @@ parent">
 <i class="fas fa-check read-icon"></i>
 </a>
 </li>
-<li data-nav-id=/2-prerequiste/2.1.4-createvpc/ title="Preparing the Environment to Build a Docker Image for a Spring Boot Project" class=dd-item>
+<li data-nav-id=/2-prerequiste/2.1.4-createvpc/ title="Preparing the Environment to Create a Docker Image for a Spring Boot Project" class=dd-item>
 <a href=../../2-prerequiste/2.1.4-createvpc/>
-<b> 2.1.4 </b> Preparing the Environment to Build a Docker Image for a Spring Boot Project
+<b> 2.1.2 </b> Preparing the Environment to Create a Docker Image for a Spring Boot Project
 <i class="fas fa-check read-icon"></i>
 </a>
 </li>
-<li data-nav-id=/2-prerequiste/2.1.2-createpublicsubnet/ title="Create Public Subnet" class=dd-item>
+<li data-nav-id=/2-prerequiste/2.1.2-createpublicsubnet/ title="Deploying a Docker Image to AWS ECR on Linux" class=dd-item>
 <a href=../../2-prerequiste/2.1.2-createpublicsubnet/>
-<b> 2.1.2 </b> Create Public Subnet
+<b> 2.1.2 </b> Deploying a Docker Image to AWS ECR on Linux
 <i class="fas fa-check read-icon"></i>
 </a>
 </li>
-<li data-nav-id=/2-prerequiste/2.1.3-createprivatesubnet/ title="Deploying an AWS CDK Project Connecting ECS, EC2, and IAM" class="dd-item
+<li data-nav-id=/2-prerequiste/2.1.3-createprivatesubnet/ title="Deploying an AWS CDK Project Connecting ECS, EC2, IAM" class="dd-item
 parent
 active">
 <a href=../../2-prerequiste/2.1.3-createprivatesubnet/>
-<b> 2.1.3 </b> Deploying an AWS CDK Project Connecting ECS, EC2, and IAM
+<b> 2.1.3 </b> Deploying an AWS CDK Project Connecting ECS, EC2, IAM
 <i class="fas fa-check read-icon"></i>
 </a>
 </li>
@@ -100,19 +100,19 @@ active">
 </li>
 <li data-nav-id=/7-dashboard/ title="Dashboard Development" class=dd-item>
 <a href=../../7-dashboard/>
-<b> 5. </b> Dashboard Development
+<b> 6. </b> Dashboard Development
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+<li data-nav-id=/8-operations/ title="Operational Procedures" class=dd-item>
+<a href=../../8-operations/>
+<b>7. </b>Operational Procedures
 <i class="fas fa-check read-icon"></i>
 </a>
 </li>
 <li data-nav-id=/11-cleanup/ title="Clean up" class=dd-item>
 <a href=../../11-cleanup/>
 <b>8. </b>Clean up
-<i class="fas fa-check read-icon"></i>
-</a>
-</li>
-<li data-nav-id=/8-operations/ title="Operational Procedures" class=dd-item>
-<a href=../../8-operations/>
-<b>8. </b>Operational Procedures
 <i class="fas fa-check read-icon"></i>
 </a>
 </li>
@@ -178,18 +178,40 @@ active">
 </span>
 <span id=toc-menu><i class="fas fa-list-alt"></i></span>
 <span class=links>
-<a href=../../>Session Management</a> > <a href=../../2-prerequiste/>Preparation Steps</a> > Deploying an AWS CDK Project Connecting ECS, EC2, and IAM
+<a href=../../>Session Management</a> > <a href=../../2-prerequiste/>Preparation Steps</a> > Deploying an AWS CDK Project Connecting ECS, EC2, IAM
 </span>
 </div>
 <div class=progress>
 <div class=wrapper>
 <nav id=TableOfContents>
 <ul>
-<li>
+<li><a href=#-1-installing-aws-cdk-environment-on-ubuntu>✅ 1. Installing AWS CDK Environment on Ubuntu</a>
 <ul>
-<li></li>
+<li><a href=#-remove-old-nodejsnpm-if-any>🔹 Remove old Node.js/NPM (if any)</a></li>
+<li><a href=#-install-nvm-and-nodejs-stable-version>🔹 Install NVM and Node.js (Stable version)</a></li>
+<li><a href=#-install-aws-cdk>🔹 Install AWS CDK</a></li>
 </ul>
 </li>
+<li><a href=#-2-initialize-a-cdk-typescript-project>✅ 2. Initialize a CDK TypeScript Project</a>
+<ul>
+<li><a href=#-install-additional-required-aws-libraries>🔹 Install additional required AWS libraries</a></li>
+</ul>
+</li>
+<li><a href=#-3-create-cdk-stack-libwebenglish-cdk-stackts>✅ 3. Create CDK Stack (<code>lib/webenglish-cdk-stack.ts</code>)</a></li>
+<li><a href=#-4-configure-aws-cli>✅ 4. Configure AWS CLI</a>
+<ul>
+<li><a href=#-log-in-to-aws>🔹 Log in to AWS</a></li>
+</ul>
+</li>
+<li><a href=#-5-create-iam-role-for-ecs-task>✅ 5. Create IAM Role for ECS Task</a>
+<ul>
+<li><a href=#on-aws-console>On AWS Console:</a></li>
+</ul>
+</li>
+<li><a href=#-6-bootstrap-cdk--deploy>✅ 6. Bootstrap CDK & Deploy</a></li>
+<li><a href=#-additional-notes>📌 Additional Notes</a></li>
+<li><a href=#-future-improvements>🧠 Future Improvements</a></li>
+<li><a href=#-references>🧾 References</a></li>
 </ul>
 </nav>
 </div>
@@ -200,56 +222,229 @@ active">
 </div>
 <div id=body-inner>
 <h1>
-Deploying an AWS CDK Project Connecting ECS, EC2, and IAM
+Deploying an AWS CDK Project Connecting ECS, EC2, IAM
 </h1>
-<h4 id=create-private-subnet>Create Private Subnet</h4>
+<h1 id=-guide-to-deploying-an-application-on-aws-using-aws-cdk>🚀 Guide to Deploying an Application on AWS Using AWS CDK</h1>
+<p>This document provides instructions on how to set up and deploy a Spring Boot application using AWS CDK with the following related services: ECS, EC2 (VPC), IAM, and CloudWatch Logs. The project uses AWS Fargate to run containers without managing servers.</p>
+<hr>
+<h2 id=-1-installing-aws-cdk-environment-on-ubuntu>✅ 1. Installing AWS CDK Environment on Ubuntu</h2>
+<h3 id=-remove-old-nodejsnpm-if-any>🔹 Remove old Node.js/NPM (if any)</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo yum remove -y nodejs npm
+sudo yum autoremove -y
+</code></pre></div><h3 id=-install-nvm-and-nodejs-stable-version>🔹 Install NVM and Node.js (Stable version)</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+export NVM_DIR<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;</span>$HOME<span style=color:#e6db74>/.nvm&#34;</span>
+source <span style=color:#e6db74>&#34;</span>$NVM_DIR<span style=color:#e6db74>/nvm.sh&#34;</span>
+nvm install 22.9.0
+nvm use 22.9.0
+</code></pre></div><p><img src=../../images/2.prerequisite/12-44.jpg alt=VPC></p>
+<h3 id=-install-aws-cdk>🔹 Install AWS CDK</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>npm install -g aws-cdk
+</code></pre></div><p>Check version:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>cdk --version
+</code></pre></div><p><img src=../../images/2.prerequisite/12-45.jpg alt=VPC></p>
+<hr>
+<h2 id=-2-initialize-a-cdk-typescript-project>✅ 2. Initialize a CDK TypeScript Project</h2>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>mkdir test-cdk <span style=color:#f92672>&amp;&amp;</span> cd test-cdk
+cdk init app --language typescript
+</code></pre></div><p><img src=../../images/2.prerequisite/12-46.jpg alt=VPC></p>
+<h3 id=-install-additional-required-aws-libraries>🔹 Install additional required AWS libraries</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>npm install @aws-cdk/aws-ecs @aws-cdk/aws-ec2 @aws-cdk/aws-ecs-patterns @aws-cdk/aws-rds
+</code></pre></div><p><img src=../../images/2.prerequisite/12-47.jpg alt=VPC></p>
+<hr>
+<h2 id=-3-create-cdk-stack-libwebenglish-cdk-stackts>✅ 3. Create CDK Stack (<code>lib/webenglish-cdk-stack.ts</code>)</h2>
+<p>Create the file <code>lib/webenglish-cdk-stack.ts</code> with the following content:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ts data-lang=ts><span style=color:#66d9ef>import</span> <span style=color:#f92672>*</span> <span style=color:#66d9ef>as</span> <span style=color:#a6e22e>cdk</span> <span style=color:#66d9ef>from</span> <span style=color:#e6db74>&#39;aws-cdk-lib&#39;</span>;
+<span style=color:#66d9ef>import</span> <span style=color:#f92672>*</span> <span style=color:#66d9ef>as</span> <span style=color:#a6e22e>ec2</span> <span style=color:#66d9ef>from</span> <span style=color:#e6db74>&#39;aws-cdk-lib/aws-ec2&#39;</span>;
+<span style=color:#66d9ef>import</span> <span style=color:#f92672>*</span> <span style=color:#66d9ef>as</span> <span style=color:#a6e22e>ecs</span> <span style=color:#66d9ef>from</span> <span style=color:#e6db74>&#39;aws-cdk-lib/aws-ecs&#39;</span>;
+<span style=color:#66d9ef>import</span> <span style=color:#f92672>*</span> <span style=color:#66d9ef>as</span> <span style=color:#a6e22e>iam</span> <span style=color:#66d9ef>from</span> <span style=color:#e6db74>&#39;aws-cdk-lib/aws-iam&#39;</span>;
+<span style=color:#66d9ef>import</span> <span style=color:#f92672>*</span> <span style=color:#66d9ef>as</span> <span style=color:#a6e22e>logs</span> <span style=color:#66d9ef>from</span> <span style=color:#e6db74>&#39;aws-cdk-lib/aws-logs&#39;</span>;
+<span style=color:#66d9ef>import</span> { <span style=color:#a6e22e>Construct</span> } <span style=color:#66d9ef>from</span> <span style=color:#e6db74>&#39;constructs&#39;</span>;
+
+<span style=color:#66d9ef>export</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>TestCdkStack</span> <span style=color:#66d9ef>extends</span> <span style=color:#a6e22e>cdk</span>.<span style=color:#a6e22e>Stack</span> {
+  <span style=color:#66d9ef>constructor</span>(<span style=color:#a6e22e>scope</span>: <span style=color:#66d9ef>Construct</span>, <span style=color:#a6e22e>id</span>: <span style=color:#66d9ef>string</span>, <span style=color:#a6e22e>props?</span>: <span style=color:#66d9ef>cdk.StackProps</span>) {
+    <span style=color:#66d9ef>super</span>(<span style=color:#a6e22e>scope</span>, <span style=color:#a6e22e>id</span>, <span style=color:#a6e22e>props</span>);
+
+    <span style=color:#75715e>// VPC
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>vpc</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>ec2</span>.<span style=color:#a6e22e>Vpc</span>(<span style=color:#66d9ef>this</span>, <span style=color:#e6db74>&#39;MyVpc&#39;</span>, {
+      <span style=color:#a6e22e>maxAzs</span>: <span style=color:#66d9ef>2</span>,
+      <span style=color:#a6e22e>subnetConfiguration</span><span style=color:#f92672>:</span> [
+        { <span style=color:#a6e22e>subnetType</span>: <span style=color:#66d9ef>ec2.SubnetType.PUBLIC</span>, <span style=color:#a6e22e>name</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;Public&#39;</span> },
+        { <span style=color:#a6e22e>subnetType</span>: <span style=color:#66d9ef>ec2.SubnetType.PRIVATE_WITH_EGRESS</span>, <span style=color:#a6e22e>name</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;Private&#39;</span> },
+      ],
+    });
+
+    <span style=color:#75715e>// ECS Cluster
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>cluster</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>ecs</span>.<span style=color:#a6e22e>Cluster</span>(<span style=color:#66d9ef>this</span>, <span style=color:#e6db74>&#39;MyCluster&#39;</span>, { <span style=color:#a6e22e>vpc</span> });
+
+    <span style=color:#75715e>// IAM Execution Role (existing role)
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>executionRole</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>iam</span>.<span style=color:#a6e22e>Role</span>.<span style=color:#a6e22e>fromRoleArn</span>(
+      <span style=color:#66d9ef>this</span>,
+      <span style=color:#e6db74>&#39;EcsExecutionRole&#39;</span>,
+      <span style=color:#e6db74>&#39;arn:aws:iam::466322313916:role/WebenglishEcsExecutionRole&#39;</span>
+    );
+
+    <span style=color:#75715e>// Log Group
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>logGroup</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>logs</span>.<span style=color:#a6e22e>LogGroup</span>(<span style=color:#66d9ef>this</span>, <span style=color:#e6db74>&#39;WebenglishLogGroup&#39;</span>, {
+      <span style=color:#a6e22e>retention</span>: <span style=color:#66d9ef>logs.RetentionDays.ONE_WEEK</span>,
+    });
+
+    <span style=color:#75715e>// Fargate Task Definition
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>taskDefinition</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>ecs</span>.<span style=color:#a6e22e>FargateTaskDefinition</span>(<span style=color:#66d9ef>this</span>, <span style=color:#e6db74>&#39;TaskDef&#39;</span>, {
+      <span style=color:#a6e22e>memoryLimitMiB</span>: <span style=color:#66d9ef>2048</span>,
+      <span style=color:#a6e22e>cpu</span>: <span style=color:#66d9ef>1024</span>,
+      <span style=color:#a6e22e>executionRole</span>,
+    });
+
+    <span style=color:#75715e>// MySQL Container
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>mysqlContainer</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>taskDefinition</span>.<span style=color:#a6e22e>addContainer</span>(<span style=color:#e6db74>&#39;MySQLContainer&#39;</span>, {
+      <span style=color:#a6e22e>image</span>: <span style=color:#66d9ef>ecs.ContainerImage.fromRegistry</span>(
+        <span style=color:#e6db74>&#39;466322313916.dkr.ecr.ap-northeast-1.amazonaws.com/webenglish:mysql-8.0&#39;</span>
+      ),
+      <span style=color:#a6e22e>environment</span><span style=color:#f92672>:</span> {
+        <span style=color:#a6e22e>MYSQL_ROOT_PASSWORD</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;123456&#39;</span>,
+        <span style=color:#a6e22e>MYSQL_DATABASE</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;webenglish&#39;</span>,
+      },
+      <span style=color:#a6e22e>logging</span>: <span style=color:#66d9ef>ecs.LogDriver.awsLogs</span>({
+        <span style=color:#a6e22e>logGroup</span>,
+        <span style=color:#a6e22e>streamPrefix</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;mysql&#39;</span>,
+      }),
+      <span style=color:#a6e22e>portMappings</span><span style=color:#f92672>:</span> [{ <span style=color:#a6e22e>containerPort</span>: <span style=color:#66d9ef>3306</span> }],
+      <span style=color:#a6e22e>essential</span>: <span style=color:#66d9ef>true</span>,
+      <span style=color:#a6e22e>healthCheck</span><span style=color:#f92672>:</span> {
+        <span style=color:#a6e22e>command</span><span style=color:#f92672>:</span> [<span style=color:#e6db74>&#39;CMD&#39;</span>, <span style=color:#e6db74>&#39;mysqladmin&#39;</span>, <span style=color:#e6db74>&#39;ping&#39;</span>, <span style=color:#e6db74>&#39;-h&#39;</span>, <span style=color:#e6db74>&#39;localhost&#39;</span>],
+        <span style=color:#a6e22e>interval</span>: <span style=color:#66d9ef>cdk.Duration.seconds</span>(<span style=color:#ae81ff>10</span>),
+        <span style=color:#a6e22e>timeout</span>: <span style=color:#66d9ef>cdk.Duration.seconds</span>(<span style=color:#ae81ff>5</span>),
+        <span style=color:#a6e22e>retries</span>: <span style=color:#66d9ef>5</span>,
+        <span style=color:#a6e22e>startPeriod</span>: <span style=color:#66d9ef>cdk.Duration.seconds</span>(<span style=color:#ae81ff>20</span>),
+      },
+    });
+
+    <span style=color:#75715e>// App Container (Spring Boot)
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>appContainer</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>taskDefinition</span>.<span style=color:#a6e22e>addContainer</span>(<span style=color:#e6db74>&#39;WebenglishApp&#39;</span>, {
+      <span style=color:#a6e22e>image</span>: <span style=color:#66d9ef>ecs.ContainerImage.fromRegistry</span>(
+        <span style=color:#e6db74>&#39;466322313916.dkr.ecr.ap-northeast-1.amazonaws.com/webenglish:webenglish-app&#39;</span>
+      ),
+      <span style=color:#a6e22e>logging</span>: <span style=color:#66d9ef>ecs.LogDriver.awsLogs</span>({
+        <span style=color:#a6e22e>logGroup</span>,
+        <span style=color:#a6e22e>streamPrefix</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;webenglish-app&#39;</span>,
+      }),
+      <span style=color:#a6e22e>portMappings</span><span style=color:#f92672>:</span> [{ <span style=color:#a6e22e>containerPort</span>: <span style=color:#66d9ef>8080</span> }],
+      <span style=color:#a6e22e>environment</span><span style=color:#f92672>:</span> {
+        <span style=color:#a6e22e>SPRING_DATASOURCE_URL</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;jdbc:mysql://localhost:3306/webenglish&#39;</span>,
+        <span style=color:#a6e22e>SPRING_DATASOURCE_USERNAME</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;root&#39;</span>,
+        <span style=color:#a6e22e>SPRING_DATASOURCE_PASSWORD</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;123456&#39;</span>,
+      },
+    });
+
+    <span style=color:#75715e>// Container Dependency: app waits for MySQL to be healthy
+</span><span style=color:#75715e></span>    <span style=color:#a6e22e>appContainer</span>.<span style=color:#a6e22e>addContainerDependencies</span>({
+      <span style=color:#a6e22e>container</span>: <span style=color:#66d9ef>mysqlContainer</span>,
+      <span style=color:#a6e22e>condition</span>: <span style=color:#66d9ef>ecs.ContainerDependencyCondition.HEALTHY</span>,
+    });
+
+    <span style=color:#75715e>// Fargate Service
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>ecs</span>.<span style=color:#a6e22e>FargateService</span>(<span style=color:#66d9ef>this</span>, <span style=color:#e6db74>&#39;WebenglishService&#39;</span>, {
+      <span style=color:#a6e22e>cluster</span>,
+      <span style=color:#a6e22e>taskDefinition</span>,
+      <span style=color:#a6e22e>desiredCount</span>: <span style=color:#66d9ef>1</span>,
+      <span style=color:#a6e22e>assignPublicIp</span>: <span style=color:#66d9ef>true</span>,
+    });
+  }
+}
+</code></pre></div><hr>
+<h2 id=-4-configure-aws-cli>✅ 4. Configure AWS CLI</h2>
+<h3 id=-log-in-to-aws>🔹 Log in to AWS</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>aws configure
+</code></pre></div><p>Enter:</p>
+<ul>
+<li><code>AWS Access Key ID</code></li>
+<li><code>AWS Secret Access Key</code></li>
+<li><code>Region</code>: <code>ap-northeast-1</code></li>
+</ul>
+<hr>
+<h2 id=-5-create-iam-role-for-ecs-task>✅ 5. Create IAM Role for ECS Task</h2>
+<h3 id=on-aws-console>On AWS Console:</h3>
 <ol>
-<li>Click <strong>Subnets</strong>.
+<li>
+<p>Go to <strong>IAM > Roles</strong></p>
+</li>
+<li>
+<p>Create role <code>WebenglishEcsExecutionRole</code></p>
+</li>
+<li>
+<p>Attach the following policy:</p>
 <ul>
-<li>Click <strong>Create subnet</strong>.</li>
+<li><code>AmazonECSTaskExecutionRolePolicy</code></li>
 </ul>
 </li>
-</ol>
-<p><img src=../../images/2.prerequisite/017-createsubnet.png alt=VPC></p>
-<ol start=2>
-<li>At the <strong>Create subnet</strong> page.
-<ul>
-<li>In the <strong>VPC ID</strong> section, click <strong>Lab VPC</strong>.</li>
-<li>In the <strong>Subnet name</strong> field, enter <strong>Lab Private Subnet</strong>.</li>
-<li>In the <strong>Availability Zone</strong> section, select the first Availability zone.</li>
-<li>In the field <strong>IPv4 CIRD block</strong> enter <strong>10.10.2.0/24</strong>.</li>
-</ul>
+<li>
+<p>Save the ARN of the role:
+Example:
+<code>arn:aws:iam::466322313916:role/WebenglishEcsExecutionRole</code></p>
 </li>
 </ol>
-<p><img src=../../images/2.prerequisite/018-createsubnet.png alt=VPC></p>
-<ol start=3>
-<li>Scroll to the bottom of the page, click <strong>Create subnet</strong>.</li>
-</ol>
-<p>The next step is to create the necessary security groups for the lab.</p>
+<hr>
+<p><img src=../../images/2.prerequisite/12-49.jpg alt=VPC></p>
+<h2 id=-6-bootstrap-cdk--deploy>✅ 6. Bootstrap CDK & Deploy</h2>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>cdk bootstrap aws://466322313916/ap-northeast-1
+cdk synth
+cdk deploy
+</code></pre></div><p><img src=../../images/2.prerequisite/12-53.jpg alt=VPC>
+<img src=../../images/2.prerequisite/12-52.jpg alt=VPC>
+<img src=../../images/2.prerequisite/12-54.jpg alt=VPC>
+<img src=../../images/2.prerequisite/12-55.jpg alt=VPC>
+<img src=../../images/2.prerequisite/12-56.jpg alt=VPC>
+<img src=../../images/2.prerequisite/12-57.jpg alt=VPC>
+<img src=../../images/2.prerequisite/12-570.jpg alt=VPC>
+<img src=../../images/2.prerequisite/12-571.jpg alt=VPC></p>
+<hr>
+<h2 id=-additional-notes>📌 Additional Notes</h2>
+<ul>
+<li>You must create the ECR repository and push the image <code>webenglish:webenglish-app</code> beforehand.</li>
+<li>If using a real RDS database, you must create an RDS instance and update the <code>SPRING_DATASOURCE_URL</code>.</li>
+</ul>
+<hr>
+<h2 id=-future-improvements>🧠 Future Improvements</h2>
+<ul>
+<li>Integrate a Load Balancer (ALB) using <code>ApplicationLoadBalancedFargateService</code></li>
+<li>Connect RDS via Security Group and Secrets Manager</li>
+<li>Integrate CI/CD with GitHub Actions or AWS CodePipeline</li>
+</ul>
+<hr>
+<h2 id=-references>🧾 References</h2>
+<ul>
+<li><a href=https://docs.aws.amazon.com/cdk/>https://docs.aws.amazon.com/cdk/</a></li>
+<li><a href=https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html>https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html</a></li>
+</ul>
+<pre tabindex=0><code>
+---
+
+</code></pre>
 <footer class=footline>
 </footer>
 </div>
 </div>
 <div id=navigation>
-<a class="nav nav-prev" href=../../2-prerequiste/2.1.2-createpublicsubnet/ title="Create Public Subnet"> <i class="fa fa-chevron-left"></i></a>
+<a class="nav nav-prev" href=../../2-prerequiste/2.1.2-createpublicsubnet/ title="Deploying a Docker Image to AWS ECR on Linux"> <i class="fa fa-chevron-left"></i></a>
 <a class="nav nav-next" href=../../3-monitoring/ title="Monitoring Implementation" style=margin-right:0><i class="fa fa-chevron-right"></i></a>
 </div>
 </section>
 <div style=left:-1000px;overflow:scroll;position:absolute;top:-1000px;border:none;box-sizing:content-box;height:200px;margin:0;padding:0;width:200px>
 <div style=border:none;box-sizing:content-box;height:200px;margin:0;padding:0;width:200px></div>
 </div>
-<script src=../../js/clipboard.min.js?1754753453></script>
-<script src=../../js/perfect-scrollbar.min.js?1754753453></script>
-<script src=../../js/perfect-scrollbar.jquery.min.js?1754753453></script>
-<script src=../../js/jquery.sticky.js?1754753453></script>
-<script src=../../js/featherlight.min.js?1754753453></script>
-<script src=../../js/highlight.pack.js?1754753453></script>
+<script src=../../js/clipboard.min.js?1754806848></script>
+<script src=../../js/perfect-scrollbar.min.js?1754806848></script>
+<script src=../../js/perfect-scrollbar.jquery.min.js?1754806848></script>
+<script src=../../js/jquery.sticky.js?1754806848></script>
+<script src=../../js/featherlight.min.js?1754806848></script>
+<script src=../../js/highlight.pack.js?1754806848></script>
 <script>hljs.initHighlightingOnLoad()</script>
-<script src=../../js/modernizr.custom-3.6.0.js?1754753453></script>
-<script src=../../js/learn.js?1754753453></script>
-<script src=../../js/hugo-learn.js?1754753453></script>
-<link href=../../mermaid/mermaid.css?1754753453 rel=stylesheet>
-<script src=../../mermaid/mermaid.js?1754753453></script>
+<script src=../../js/modernizr.custom-3.6.0.js?1754806848></script>
+<script src=../../js/learn.js?1754806848></script>
+<script src=../../js/hugo-learn.js?1754806848></script>
+<link href=../../mermaid/mermaid.css?1754806848 rel=stylesheet>
+<script src=../../mermaid/mermaid.js?1754806848></script>
 <script>mermaid.initialize({startOnLoad:!0})</script>
 <script>(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-158079754-2','auto'),ga('send','pageview')</script>
 </body>

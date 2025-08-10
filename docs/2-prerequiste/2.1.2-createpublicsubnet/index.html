@@ -6,18 +6,18 @@
 <meta name=description content>
 <meta name=author content="journeyoftheaverageguy@gmail.com">
 <link rel=icon href=../../images/favicon.png type=image/png>
-<title>Create Public Subnet :: AWS System Manager</title>
-<link href=../../css/nucleus.css?1754753453 rel=stylesheet>
-<link href=../../css/fontawesome-all.min.css?1754753453 rel=stylesheet>
-<link href=../../css/hybrid.css?1754753453 rel=stylesheet>
-<link href=../../css/featherlight.min.css?1754753453 rel=stylesheet>
-<link href=../../css/perfect-scrollbar.min.css?1754753453 rel=stylesheet>
-<link href=../../css/auto-complete.css?1754753453 rel=stylesheet>
-<link href=../../css/atom-one-dark-reasonable.css?1754753453 rel=stylesheet>
-<link href=../../css/theme.css?1754753453 rel=stylesheet>
-<link href=../../css/hugo-theme.css?1754753453 rel=stylesheet>
-<link href=../../css/theme-workshop.css?1754753453 rel=stylesheet>
-<script src=../../js/jquery-3.3.1.min.js?1754753453></script>
+<title>Deploying a Docker Image to AWS ECR on Linux :: AWS System Manager</title>
+<link href=../../css/nucleus.css?1754806848 rel=stylesheet>
+<link href=../../css/fontawesome-all.min.css?1754806848 rel=stylesheet>
+<link href=../../css/hybrid.css?1754806848 rel=stylesheet>
+<link href=../../css/featherlight.min.css?1754806848 rel=stylesheet>
+<link href=../../css/perfect-scrollbar.min.css?1754806848 rel=stylesheet>
+<link href=../../css/auto-complete.css?1754806848 rel=stylesheet>
+<link href=../../css/atom-one-dark-reasonable.css?1754806848 rel=stylesheet>
+<link href=../../css/theme.css?1754806848 rel=stylesheet>
+<link href=../../css/hugo-theme.css?1754806848 rel=stylesheet>
+<link href=../../css/theme-workshop.css?1754806848 rel=stylesheet>
+<script src=../../js/jquery-3.3.1.min.js?1754806848></script>
 <style>:root #header+#content>#left>#rlblock_left{display:none!important}</style>
 </head>
 <body data-url=../../2-prerequiste/2.1.2-createpublicsubnet/>
@@ -32,10 +32,10 @@
 <input data-search-input id=search-by type=search placeholder=Search...>
 <span data-search-clear><i class="fas fa-times"></i></span>
 </div>
-<script type=text/javascript src=../../js/lunr.min.js?1754753453></script>
-<script type=text/javascript src=../../js/auto-complete.js?1754753453></script>
+<script type=text/javascript src=../../js/lunr.min.js?1754806848></script>
+<script type=text/javascript src=../../js/auto-complete.js?1754806848></script>
 <script type=text/javascript>var baseurl="https://phungduydat.github.io/FCJ-Workshop/"</script>
-<script type=text/javascript src=../../js/search.js?1754753453></script>
+<script type=text/javascript src=../../js/search.js?1754806848></script>
 </div>
 <div class=highlightable>
 <ul class=topics>
@@ -58,23 +58,23 @@ parent">
 <i class="fas fa-check read-icon"></i>
 </a>
 </li>
-<li data-nav-id=/2-prerequiste/2.1.4-createvpc/ title="Preparing the Environment to Build a Docker Image for a Spring Boot Project" class=dd-item>
+<li data-nav-id=/2-prerequiste/2.1.4-createvpc/ title="Preparing the Environment to Create a Docker Image for a Spring Boot Project" class=dd-item>
 <a href=../../2-prerequiste/2.1.4-createvpc/>
-<b> 2.1.4 </b> Preparing the Environment to Build a Docker Image for a Spring Boot Project
+<b> 2.1.2 </b> Preparing the Environment to Create a Docker Image for a Spring Boot Project
 <i class="fas fa-check read-icon"></i>
 </a>
 </li>
-<li data-nav-id=/2-prerequiste/2.1.2-createpublicsubnet/ title="Create Public Subnet" class="dd-item
+<li data-nav-id=/2-prerequiste/2.1.2-createpublicsubnet/ title="Deploying a Docker Image to AWS ECR on Linux" class="dd-item
 parent
 active">
 <a href=../../2-prerequiste/2.1.2-createpublicsubnet/>
-<b> 2.1.2 </b> Create Public Subnet
+<b> 2.1.2 </b> Deploying a Docker Image to AWS ECR on Linux
 <i class="fas fa-check read-icon"></i>
 </a>
 </li>
-<li data-nav-id=/2-prerequiste/2.1.3-createprivatesubnet/ title="Deploying an AWS CDK Project Connecting ECS, EC2, and IAM" class=dd-item>
+<li data-nav-id=/2-prerequiste/2.1.3-createprivatesubnet/ title="Deploying an AWS CDK Project Connecting ECS, EC2, IAM" class=dd-item>
 <a href=../../2-prerequiste/2.1.3-createprivatesubnet/>
-<b> 2.1.3 </b> Deploying an AWS CDK Project Connecting ECS, EC2, and IAM
+<b> 2.1.3 </b> Deploying an AWS CDK Project Connecting ECS, EC2, IAM
 <i class="fas fa-check read-icon"></i>
 </a>
 </li>
@@ -100,19 +100,19 @@ active">
 </li>
 <li data-nav-id=/7-dashboard/ title="Dashboard Development" class=dd-item>
 <a href=../../7-dashboard/>
-<b> 5. </b> Dashboard Development
+<b> 6. </b> Dashboard Development
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+<li data-nav-id=/8-operations/ title="Operational Procedures" class=dd-item>
+<a href=../../8-operations/>
+<b>7. </b>Operational Procedures
 <i class="fas fa-check read-icon"></i>
 </a>
 </li>
 <li data-nav-id=/11-cleanup/ title="Clean up" class=dd-item>
 <a href=../../11-cleanup/>
 <b>8. </b>Clean up
-<i class="fas fa-check read-icon"></i>
-</a>
-</li>
-<li data-nav-id=/8-operations/ title="Operational Procedures" class=dd-item>
-<a href=../../8-operations/>
-<b>8. </b>Operational Procedures
 <i class="fas fa-check read-icon"></i>
 </a>
 </li>
@@ -178,18 +178,30 @@ active">
 </span>
 <span id=toc-menu><i class="fas fa-list-alt"></i></span>
 <span class=links>
-<a href=../../>Session Management</a> > <a href=../../2-prerequiste/>Preparation Steps</a> > Create Public Subnet
+<a href=../../>Session Management</a> > <a href=../../2-prerequiste/>Preparation Steps</a> > Deploying a Docker Image to AWS ECR on Linux
 </span>
 </div>
 <div class=progress>
 <div class=wrapper>
 <nav id=TableOfContents>
 <ul>
-<li>
+<li><a href=#-objective>🎯 Objective</a></li>
+<li><a href=#-1-install-aws-cli-on-linux>🧰 1. Install AWS CLI on Linux</a></li>
+<li><a href=#-2-configure-aws-cli>⚙️ 2. Configure AWS CLI</a></li>
+<li><a href=#-3-create-ecr-repository-on-aws-console>📦 3. Create ECR Repository on AWS Console</a></li>
+<li><a href=#-4-build-the-application-docker-image>🏗 4. Build the Application Docker Image</a></li>
+<li><a href=#-5-log-in-to-amazon-ecr>🔐 5. Log In to Amazon ECR</a></li>
+<li><a href=#-6-tag-the-docker-image-with-ecr-uri>🏷 6. Tag the Docker Image with ECR URI</a></li>
+<li><a href=#-7-push-the-docker-image-to-ecr>🚀 7. Push the Docker Image to ECR</a></li>
+<li><a href=#-8-push-mysql-80-image-to-ecr-optional>🐬 8. Push MySQL 8.0 Image to ECR (Optional)</a>
 <ul>
-<li></li>
+<li><a href=#-tag-the-mysql-image>✅ Tag the MySQL image</a></li>
+<li><a href=#-push-the-mysql-image-to-ecr>✅ Push the MySQL image to ECR</a></li>
 </ul>
 </li>
+<li><a href=#-9-verify-in-aws-console>📋 9. Verify in AWS Console</a></li>
+<li><a href=#-10-additional-notes>📝 10. Additional Notes</a></li>
+<li><a href=#-11-references>📚 11. References</a></li>
 </ul>
 </nav>
 </div>
@@ -200,153 +212,152 @@ active">
 </div>
 <div id=body-inner>
 <h1>
-Create Public Subnet
+Deploying a Docker Image to AWS ECR on Linux
 </h1>
-<h4 id=create-public-subnet>Create Public Subnet</h4>
+<h2 id=-objective>🎯 Objective</h2>
+<p>This guide explains how to install AWS CLI, configure your AWS account, create a repository on Amazon ECR, and push Docker images from a local machine (including MySQL images) to ECR.</p>
+<hr>
+<h2 id=-1-install-aws-cli-on-linux>🧰 1. Install AWS CLI on Linux</h2>
+<p>Run the following commands to install AWS CLI v2:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># Download AWS CLI v2</span>
+curl <span style=color:#e6db74>&#34;https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip&#34;</span> -o <span style=color:#e6db74>&#34;awscliv2.zip&#34;</span>
+
+<span style=color:#75715e># Unzip</span>
+unzip awscliv2.zip
+
+<span style=color:#75715e># Install</span>
+sudo ./aws/install
+
+<span style=color:#75715e># Verify version</span>
+aws --version
+</code></pre></div><p><img src=../../images/2.prerequisite/12-30.jpg alt=VPC>
+<img src=../../images/2.prerequisite/12-31.jpg alt=VPC></p>
+<hr>
+<h2 id=-2-configure-aws-cli>⚙️ 2. Configure AWS CLI</h2>
+<p>After installation, run the following to configure your AWS credentials:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>aws configure
+</code></pre></div><p><img src=../../images/2.prerequisite/12-33.jpg alt=VPC>
+<img src=../../images/2.prerequisite/12-34.jpg alt=VPC></p>
+<p>Enter the following information:</p>
+<ul>
+<li><code>AWS Access Key ID</code>: from your IAM user</li>
+<li><code>AWS Secret Access Key</code>: from your IAM user</li>
+<li><code>Default region name</code>: <code>ap-northeast-1</code> (or your preferred region)</li>
+<li><code>Default output format</code>: <code>json</code></li>
+</ul>
+<p><img src=../../images/2.prerequisite/12-35.jpg alt=VPC></p>
+<hr>
+<h2 id=-3-create-ecr-repository-on-aws-console>📦 3. Create ECR Repository on AWS Console</h2>
 <ol>
-<li>Click <strong>Subnets</strong>.</li>
+<li>Go to: <a href=https://console.aws.amazon.com/ecr>https://console.aws.amazon.com/ecr</a></li>
+<li>Select <strong>Repositories</strong> → <strong>Create repository</strong></li>
+<li>Enter the repository name: <code>webenglish</code></li>
+<li>Select <strong>Private</strong>, keep default settings</li>
+<li>Click <strong>Create repository</strong></li>
 </ol>
+<p><img src=../../images/2.prerequisite/12-36.jpg alt=VPC>
+<img src=../../images/2.prerequisite/12-37.jpg alt=VPC></p>
+<p>You will receive a URI like this:</p>
+<pre tabindex=0><code>466322313916.dkr.ecr.ap-northeast-1.amazonaws.com/webenglish
+</code></pre><hr>
+<h2 id=-4-build-the-application-docker-image>🏗 4. Build the Application Docker Image</h2>
+<p>Navigate to the folder containing the <code>Dockerfile</code> and build the image:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>docker build -t webenglish-app .
+</code></pre></div><hr>
+<h2 id=-5-log-in-to-amazon-ecr>🔐 5. Log In to Amazon ECR</h2>
+<p>Before pushing, you must log in to ECR:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>aws ecr get-login-password --region ap-northeast-1 | <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>docker login --username AWS <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>--password-stdin 466322313916.dkr.ecr.ap-northeast-1.amazonaws.com
+</code></pre></div><p><img src=../../images/2.prerequisite/12-38.jpg alt=VPC></p>
+<hr>
+<h2 id=-6-tag-the-docker-image-with-ecr-uri>🏷 6. Tag the Docker Image with ECR URI</h2>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>docker tag webenglish-app:latest <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>466322313916.dkr.ecr.ap-northeast-1.amazonaws.com/webenglish:webenglish-app
+</code></pre></div><p><img src=../../images/2.prerequisite/12-39.jpg alt=VPC></p>
+<hr>
+<h2 id=-7-push-the-docker-image-to-ecr>🚀 7. Push the Docker Image to ECR</h2>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>docker push <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>466322313916.dkr.ecr.ap-northeast-1.amazonaws.com/webenglish:webenglish-app
+</code></pre></div><p><img src=../../images/2.prerequisite/12-40.jpg alt=VPC></p>
+<hr>
+<h2 id=-8-push-mysql-80-image-to-ecr-optional>🐬 8. Push MySQL 8.0 Image to ECR (Optional)</h2>
+<p>If you already pulled/built the MySQL <code>8.0</code> image and its ID is <code>7d4e34ccfad4</code>, you can tag and push it as follows:</p>
+<h3 id=-tag-the-mysql-image>✅ Tag the MySQL image</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>docker tag 7d4e34ccfad4 <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>466322313916.dkr.ecr.ap-northeast-1.amazonaws.com/webenglish:mysql-8.0
+</code></pre></div><p><img src=../../images/2.prerequisite/12-41.jpg alt=VPC></p>
+<p>📌 <strong>Note</strong>: You can replace <code>mysql-8.0</code> with <code>latest</code> if preferred.</p>
+<h3 id=-push-the-mysql-image-to-ecr>✅ Push the MySQL image to ECR</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>docker push <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>466322313916.dkr.ecr.ap-northeast-1.amazonaws.com/webenglish:mysql-8.0
+</code></pre></div><p><img src=../../images/2.prerequisite/12-42.jpg alt=VPC></p>
+<p>⏳ MySQL image size is around 772MB — pushing may take a few minutes.</p>
+<hr>
+<h2 id=-9-verify-in-aws-console>📋 9. Verify in AWS Console</h2>
+<p>After pushing:</p>
 <ul>
-<li>Click <strong>Create subnet</strong>.</li>
+<li>Go back to AWS Console → ECR</li>
+<li>Open the <code>webenglish</code> repository</li>
+<li>Verify that images with tags like <code>webenglish-app</code>, <code>mysql-8.0</code>, etc., are present</li>
 </ul>
-<p><img src=../../images/2.prerequisite/003-createsubnet.png alt=VPC></p>
-<ol start=2>
-<li>At the <strong>Create subnet</strong> page.</li>
-</ol>
+<p><img src=../../images/2.prerequisite/12-43.jpg alt=VPC></p>
+<hr>
+<h2 id=-10-additional-notes>📝 10. Additional Notes</h2>
 <ul>
-<li>In the <strong>VPC ID</strong> section, click <strong>Lab VPC</strong>.</li>
-<li>In the <strong>Subnet name</strong> field, enter <strong>Lab Public Subnet</strong>.</li>
-<li>In the <strong>Availability Zone</strong> section, select the first Availability zone.</li>
-<li>In the field <strong>IPv4 CIRD block</strong> enter <strong>10.10.1.0/24</strong>.</li>
-</ul>
-<p><img src=../../images/2.prerequisite/004-createsubnet.png alt=VPC></p>
-<ol start=3>
 <li>
-<p>Scroll to the bottom of the page, click <strong>Create subnet</strong>.</p>
+<p>Docker must be installed and running:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo systemctl start docker
+</code></pre></div></li>
+<li>
+<p>Your IAM account must have the following permission:</p>
+<ul>
+<li><code>AmazonEC2ContainerRegistryFullAccess</code></li>
+</ul>
 </li>
 <li>
-<p>Click <strong>Lab Public Subnet</strong>.</p>
+<p>You can use ECR images to deploy containers on:</p>
+<ul>
+<li>EC2</li>
+<li>ECS</li>
+<li>EKS</li>
+</ul>
 </li>
-</ol>
-<ul>
-<li>Click <strong>Actions</strong>.</li>
-<li>Click <strong>Edit subnet settings</strong>.</li>
 </ul>
-<p><img src=../../images/2.prerequisite/005-createsubnet.png alt=VPC></p>
-<ol start=5>
-<li>Click <strong>Enable auto-assign public IPv4 address</strong>.</li>
-</ol>
+<hr>
+<h2 id=-11-references>📚 11. References</h2>
 <ul>
-<li>Click <strong>Save</strong>.</li>
+<li><a href=https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html>AWS CLI Install Guide</a></li>
+<li><a href=https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html>Amazon ECR Documentation</a></li>
+<li><a href=https://docs.docker.com/engine/reference/commandline/cli/>Docker CLI Docs</a></li>
 </ul>
-<p><img src=../../images/2.prerequisite/006-createsubnet.png alt=VPC></p>
-<ol start=6>
-<li>Click <strong>Internet Gateways</strong>.</li>
-</ol>
-<ul>
-<li>Click <strong>Create internet gateway</strong>.</li>
-</ul>
-<p><img src=../../images/2.prerequisite/007-createigw.png alt=VPC></p>
-<ol start=7>
-<li>At the <strong>Create internet gateway</strong> page.</li>
-</ol>
-<ul>
-<li>In the <strong>Name tag</strong> field, enter <strong>Lab IGW</strong>.</li>
-<li>Click <strong>Create internet gateway</strong>.</li>
-</ul>
-<p><img src=../../images/2.prerequisite/008-createigw.png alt=VPC></p>
-<ol start=8>
-<li>After successful creation, click <strong>Actions</strong>.</li>
-</ol>
-<ul>
-<li>Click <strong>Attach to VPC</strong>.</li>
-</ul>
-<p><img src=../../images/2.prerequisite/009-createigw.png alt=VPC></p>
-<ol start=9>
-<li>At the <strong>Attach to VPC</strong> page.</li>
-</ol>
-<ul>
-<li>In the <strong>Available VPCs</strong> section, select <strong>Lab VPC</strong>.</li>
-<li>Click <strong>Attach internet gateway</strong>.</li>
-<li>Check the successful attaching process as shown below.</li>
-</ul>
-<p><img src=../../images/2.prerequisite/010-createigw.png alt=VPC></p>
-<ol start=10>
-<li>Next we will create a custom route table to assign to <strong>Lab Public Subnet</strong>.</li>
-</ol>
-<ul>
-<li>Click <strong>Route Tables</strong>.</li>
-<li>Click <strong>Create route table</strong>.</li>
-</ul>
-<p><img src=../../images/2.prerequisite/011-creatertb.png alt=VPC></p>
-<ol start=11>
-<li>At the <strong>Create route table</strong> page.</li>
-</ol>
-<ul>
-<li>In the <strong>Name</strong> field, enter <strong>Lab Publicrtb</strong>.</li>
-<li>In the <strong>VPC</strong> section, select <strong>Lab VPC</strong>.</li>
-<li>Click <strong>Create route table</strong>.</li>
-</ul>
-<ol start=12>
-<li>After creating the route table successfully.</li>
-</ol>
-<ul>
-<li>Click <strong>Edit routes</strong>.</li>
-</ul>
-<p><img src=../../images/2.prerequisite/012-creatertb.png alt=VPC></p>
-<ol start=13>
-<li>At the <strong>Edit routes</strong> page.</li>
-</ol>
-<ul>
-<li>Click <strong>Add route</strong>.</li>
-<li>In the <strong>Destination</strong> field, enter 0.0.0.0/0</li>
-<li>In the <strong>Target</strong> section, select <strong>Internet Gateway</strong> and then select <strong>Lab IGW</strong>.</li>
-<li>Click <strong>Save changes</strong>.</li>
-</ul>
-<p><img src=../../images/2.prerequisite/013-creatertb.png alt=VPC></p>
-<ol start=14>
-<li>Click the <strong>Subnet associations</strong> tab.</li>
-</ol>
-<ul>
-<li>Click <strong>Edit subnet associations</strong> to proceed with the associate custom route table we just created in <strong>Lab Public Subnet</strong>.</li>
-</ul>
-<p><img src=../../images/2.prerequisite/014-creatertb.png alt=VPC></p>
-<ol start=15>
-<li>At the <strong>Edit subnet associations</strong> page.</li>
-</ol>
-<ul>
-<li>Click on <strong>Lab Public Subnet</strong>.</li>
-<li>Click <strong>Save associations</strong>.</li>
-</ul>
-<p><img src=../../images/2.prerequisite/015-creatertb.png alt=VPC></p>
-<ol start=16>
-<li>Check that the route table information has been associated with <strong>Lab Public Subnet</strong> and the internet route information has been pointed to the Internet Gateway as shown below.</li>
-</ol>
-<p><img src=../../images/2.prerequisite/016-creatertb.png alt=VPC></p>
+<pre tabindex=0><code>
+---
+</code></pre>
 <footer class=footline>
 </footer>
 </div>
 </div>
 <div id=navigation>
-<a class="nav nav-prev" href=../../2-prerequiste/2.1.4-createvpc/ title="Preparing the Environment to Build a Docker Image for a Spring Boot Project"> <i class="fa fa-chevron-left"></i></a>
-<a class="nav nav-next" href=../../2-prerequiste/2.1.3-createprivatesubnet/ title="Deploying an AWS CDK Project Connecting ECS, EC2, and IAM" style=margin-right:0><i class="fa fa-chevron-right"></i></a>
+<a class="nav nav-prev" href=../../2-prerequiste/2.1.4-createvpc/ title="Preparing the Environment to Create a Docker Image for a Spring Boot Project"> <i class="fa fa-chevron-left"></i></a>
+<a class="nav nav-next" href=../../2-prerequiste/2.1.3-createprivatesubnet/ title="Deploying an AWS CDK Project Connecting ECS, EC2, IAM" style=margin-right:0><i class="fa fa-chevron-right"></i></a>
 </div>
 </section>
 <div style=left:-1000px;overflow:scroll;position:absolute;top:-1000px;border:none;box-sizing:content-box;height:200px;margin:0;padding:0;width:200px>
 <div style=border:none;box-sizing:content-box;height:200px;margin:0;padding:0;width:200px></div>
 </div>
-<script src=../../js/clipboard.min.js?1754753453></script>
-<script src=../../js/perfect-scrollbar.min.js?1754753453></script>
-<script src=../../js/perfect-scrollbar.jquery.min.js?1754753453></script>
-<script src=../../js/jquery.sticky.js?1754753453></script>
-<script src=../../js/featherlight.min.js?1754753453></script>
-<script src=../../js/highlight.pack.js?1754753453></script>
+<script src=../../js/clipboard.min.js?1754806848></script>
+<script src=../../js/perfect-scrollbar.min.js?1754806848></script>
+<script src=../../js/perfect-scrollbar.jquery.min.js?1754806848></script>
+<script src=../../js/jquery.sticky.js?1754806848></script>
+<script src=../../js/featherlight.min.js?1754806848></script>
+<script src=../../js/highlight.pack.js?1754806848></script>
 <script>hljs.initHighlightingOnLoad()</script>
-<script src=../../js/modernizr.custom-3.6.0.js?1754753453></script>
-<script src=../../js/learn.js?1754753453></script>
-<script src=../../js/hugo-learn.js?1754753453></script>
-<link href=../../mermaid/mermaid.css?1754753453 rel=stylesheet>
-<script src=../../mermaid/mermaid.js?1754753453></script>
+<script src=../../js/modernizr.custom-3.6.0.js?1754806848></script>
+<script src=../../js/learn.js?1754806848></script>
+<script src=../../js/hugo-learn.js?1754806848></script>
+<link href=../../mermaid/mermaid.css?1754806848 rel=stylesheet>
+<script src=../../mermaid/mermaid.js?1754806848></script>
 <script>mermaid.initialize({startOnLoad:!0})</script>
 <script>(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-158079754-2','auto'),ga('send','pageview')</script>
 </body>

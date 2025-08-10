@@ -1,98 +1,191 @@
 ---
-title : "Create Public Subnet"
-date : "`r Sys.Date()`"
-weight : 2
+title : "Deploying a Docker Image to AWS ECR on Linux"
+date :  "`r Sys.Date()`" 
+weight : 3
 chapter : false
 pre : " <b> 2.1.2 </b> "
 ---
 
-#### Create Public Subnet
+## 🎯 Objective
 
-1. Click **Subnets**.
-  + Click **Create subnet**.
+This guide explains how to install AWS CLI, configure your AWS account, create a repository on Amazon ECR, and push Docker images from a local machine (including MySQL images) to ECR.
 
-![VPC](/images/2.prerequisite/003-createsubnet.png)
+---
 
-2. At the **Create subnet** page.
-  + In the **VPC ID** section, click **Lab VPC**.
-  + In the **Subnet name** field, enter **Lab Public Subnet**.
-  + In the **Availability Zone** section, select the first Availability zone.
-  + In the field **IPv4 CIRD block** enter **10.10.1.0/24**.
+## 🧰 1. Install AWS CLI on Linux
 
-![VPC](/images/2.prerequisite/004-createsubnet.png)
+Run the following commands to install AWS CLI v2:
 
-3. Scroll to the bottom of the page, click **Create subnet**.
+```bash
+# Download AWS CLI v2
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 
-4. Click **Lab Public Subnet**.
-  + Click **Actions**.
-  + Click **Edit subnet settings**.
+# Unzip
+unzip awscliv2.zip
 
-![VPC](/images/2.prerequisite/005-createsubnet.png)
+# Install
+sudo ./aws/install
 
-5. Click **Enable auto-assign public IPv4 address**.
-  + Click **Save**.
+# Verify version
+aws --version
+````
 
-![VPC](/images/2.prerequisite/006-createsubnet.png)
+![VPC](/images/2.prerequisite/12-30.jpg)
+![VPC](/images/2.prerequisite/12-31.jpg)
 
-6. Click **Internet Gateways**.
-  + Click **Create internet gateway**.
-  
-![VPC](/images/2.prerequisite/007-createigw.png)
+---
 
-7. At the **Create internet gateway** page.
-  + In the **Name tag** field, enter **Lab IGW**.
-  + Click **Create internet gateway**.
-  
-![VPC](/images/2.prerequisite/008-createigw.png)
+## ⚙️ 2. Configure AWS CLI
 
-8. After successful creation, click **Actions**.
-  + Click **Attach to VPC**.
- 
-![VPC](/images/2.prerequisite/009-createigw.png)
+After installation, run the following to configure your AWS credentials:
 
-9. At the **Attach to VPC** page.
-  + In the **Available VPCs** section, select **Lab VPC**.
-  + Click **Attach internet gateway**.
-  + Check the successful attaching process as shown below.
+```bash
+aws configure
+```
 
-![VPC](/images/2.prerequisite/010-createigw.png)
+![VPC](/images/2.prerequisite/12-33.jpg)
+![VPC](/images/2.prerequisite/12-34.jpg)
 
-10. Next we will create a custom route table to assign to **Lab Public Subnet**.
-  + Click **Route Tables**.
-  + Click **Create route table**.
+Enter the following information:
 
-![VPC](/images/2.prerequisite/011-creatertb.png)
+* `AWS Access Key ID`: from your IAM user
+* `AWS Secret Access Key`: from your IAM user
+* `Default region name`: `ap-northeast-1` (or your preferred region)
+* `Default output format`: `json`
 
-11. At the **Create route table** page.
-  + In the **Name** field, enter **Lab Publicrtb**.
-  + In the **VPC** section, select **Lab VPC**.
-  + Click **Create route table**.
+![VPC](/images/2.prerequisite/12-35.jpg)
 
-12. After creating the route table successfully.
-  + Click **Edit routes**.
-  
-![VPC](/images/2.prerequisite/012-creatertb.png)
+---
 
-13. At the **Edit routes** page.
-  + Click **Add route**.
-  + In the **Destination** field, enter 0.0.0.0/0
-  + In the **Target** section, select **Internet Gateway** and then select **Lab IGW**.
-  + Click **Save changes**.
+## 📦 3. Create ECR Repository on AWS Console
 
-![VPC](/images/2.prerequisite/013-creatertb.png)
+1. Go to: [https://console.aws.amazon.com/ecr](https://console.aws.amazon.com/ecr)
+2. Select **Repositories** → **Create repository**
+3. Enter the repository name: `webenglish`
+4. Select **Private**, keep default settings
+5. Click **Create repository**
 
-14. Click the **Subnet associations** tab.
-  + Click **Edit subnet associations** to proceed with the associate custom route table we just created in **Lab Public Subnet**.
+![VPC](/images/2.prerequisite/12-36.jpg)
+![VPC](/images/2.prerequisite/12-37.jpg)
 
+You will receive a URI like this:
 
-![VPC](/images/2.prerequisite/014-creatertb.png)
+```
+466322313916.dkr.ecr.ap-northeast-1.amazonaws.com/webenglish
+```
 
-15. At the **Edit subnet associations** page.
-  + Click on **Lab Public Subnet**.
-  + Click **Save associations**.
+---
 
-![VPC](/images/2.prerequisite/015-creatertb.png)
+## 🏗 4. Build the Application Docker Image
 
-16. Check that the route table information has been associated with **Lab Public Subnet** and the internet route information has been pointed to the Internet Gateway as shown below.
+Navigate to the folder containing the `Dockerfile` and build the image:
 
-![VPC](/images/2.prerequisite/016-creatertb.png)
+```bash
+docker build -t webenglish-app .
+```
+
+---
+
+## 🔐 5. Log In to Amazon ECR
+
+Before pushing, you must log in to ECR:
+
+```bash
+aws ecr get-login-password --region ap-northeast-1 | \
+docker login --username AWS \
+--password-stdin 466322313916.dkr.ecr.ap-northeast-1.amazonaws.com
+```
+
+![VPC](/images/2.prerequisite/12-38.jpg)
+
+---
+
+## 🏷 6. Tag the Docker Image with ECR URI
+
+```bash
+docker tag webenglish-app:latest \
+466322313916.dkr.ecr.ap-northeast-1.amazonaws.com/webenglish:webenglish-app
+```
+
+![VPC](/images/2.prerequisite/12-39.jpg)
+
+---
+
+## 🚀 7. Push the Docker Image to ECR
+
+```bash
+docker push \
+466322313916.dkr.ecr.ap-northeast-1.amazonaws.com/webenglish:webenglish-app
+```
+
+![VPC](/images/2.prerequisite/12-40.jpg)
+
+---
+
+## 🐬 8. Push MySQL 8.0 Image to ECR (Optional)
+
+If you already pulled/built the MySQL `8.0` image and its ID is `7d4e34ccfad4`, you can tag and push it as follows:
+
+### ✅ Tag the MySQL image
+
+```bash
+docker tag 7d4e34ccfad4 \
+466322313916.dkr.ecr.ap-northeast-1.amazonaws.com/webenglish:mysql-8.0
+```
+
+![VPC](/images/2.prerequisite/12-41.jpg)
+
+📌 **Note**: You can replace `mysql-8.0` with `latest` if preferred.
+
+### ✅ Push the MySQL image to ECR
+
+```bash
+docker push \
+466322313916.dkr.ecr.ap-northeast-1.amazonaws.com/webenglish:mysql-8.0
+```
+
+![VPC](/images/2.prerequisite/12-42.jpg)
+
+⏳ MySQL image size is around 772MB — pushing may take a few minutes.
+
+---
+
+## 📋 9. Verify in AWS Console
+
+After pushing:
+
+* Go back to AWS Console → ECR
+* Open the `webenglish` repository
+* Verify that images with tags like `webenglish-app`, `mysql-8.0`, etc., are present
+
+![VPC](/images/2.prerequisite/12-43.jpg)
+
+---
+
+## 📝 10. Additional Notes
+
+* Docker must be installed and running:
+
+  ```bash
+  sudo systemctl start docker
+  ```
+* Your IAM account must have the following permission:
+
+  * `AmazonEC2ContainerRegistryFullAccess`
+* You can use ECR images to deploy containers on:
+
+  * EC2
+  * ECS
+  * EKS
+
+---
+
+## 📚 11. References
+
+* [AWS CLI Install Guide](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html)
+* [Amazon ECR Documentation](https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html)
+* [Docker CLI Docs](https://docs.docker.com/engine/reference/commandline/cli/)
+
+```
+
+---
